@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-17T03:54:44.206Z</updated>
+  <updated>2019-09-17T04:32:00.220Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,25 +21,15 @@
     <link href="http://yoursite.com/2019/09/17/JAVA%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
     <id>http://yoursite.com/2019/09/17/JAVA学习路线/</id>
     <published>2019-09-17T03:43:19.000Z</published>
-    <updated>2019-09-17T03:54:44.206Z</updated>
+    <updated>2019-09-17T04:32:00.220Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>语言的入门和进阶</li></ol><ul><li>Java基础语法,OO编程思想, 集合, IO, 异常, 泛型, 反射, 多线程, 函数式</li></ul><ol start="2"><li>Web基础和工具</li></ol><ul><li>前端基础(html/javascript/css) jquery, ajax, jsp, cookie, session</li><li>http基础</li><li>servlet基础</li><li>git,svn代码管理工具</li></ul><ol start="3"><li>企业级应用框架</li></ol><ul><li>maven/gradle项目管理工具</li><li>Spring全家桶(Spring, Spring MVC, Spring Boot)</li><li>关系型数据库相关(MySQL, jdbc, MyBatis, Hibernate)</li><li>非关系型数据库(Redis)</li><li>模板引擎(thymeleaf, freemarker)</li></ul><ol start="4"><li>高级应用框架</li></ol><ul><li>搜索引擎(elastic search)</li><li>RPCk框架(Dubbo, Spring Cloud)</li><li>中间件技术(RabbitMQ, RocketMQ, ActiveMQ, Kafka)</li><li>虚拟化技术(Docker, Kubernetes)</li></ul><ol start="5"><li>高级话题</li></ol><ul><li>jvm优化和排错, GC分析, 数据库高级优化</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="JAVA学习路线"><a href="#JAVA学习路线" class="headerlink" title="JAVA学习路线"></a>JAVA学习路线</h1><h2 id="1-语言的入门和进阶"><a href="#1-语言的入门和进阶" class="headerlink" title="1. 语言的入门和进阶"></a>1. 语言的入门和进阶</h2><ul><li>Java基础语法,OO编程思想, 集合, IO, 异常, 泛型, 反射, 多线程, 函数式</li></ul><h2 id="2-Web基础和工具"><a href="#2-Web基础和工具" class="headerlink" title="2. Web基础和工具"></a>2. Web基础和工具</h2><ul><li><p>前端基础(html/javascript/css) jquery, ajax, jsp, cookie, session</p></li><li><p>http基础</p></li><li><p>servlet基础</p></li><li><p>git,svn代码管理工具</p></li></ul><h2 id="3-企业级应用框架"><a href="#3-企业级应用框架" class="headerlink" title="3. 企业级应用框架"></a>3. 企业级应用框架</h2><ul><li><p>maven/gradle项目管理工具</p></li><li><p>Spring全家桶(Spring, Spring MVC, Spring Boot)</p></li><li><p>关系型数据库相关(MySQL, jdbc, MyBatis, Hibernate)</p></li><li><p>非关系型数据库(Redis)</p></li><li><p>模板引擎(thymeleaf, freemarker)</p></li></ul><h2 id="4-高级应用框架"><a href="#4-高级应用框架" class="headerlink" title="4. 高级应用框架"></a>4. 高级应用框架</h2><ul><li><p>搜索引擎(elastic search)</p></li><li><p>RPCk框架(Dubbo, Spring Cloud)</p></li><li><p>中间件技术(RabbitMQ, RocketMQ, ActiveMQ, Kafka)</p></li><li><p>虚拟化技术(Docker, Kubernetes)</p></li></ul><h2 id="5-高级话题"><a href="#5-高级话题" class="headerlink" title="5. 高级话题"></a>5. 高级话题</h2><ul><li>jvm优化和排错, GC分析, 数据库高级优化</li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;ol&gt;
-&lt;li&gt;语言的入门和进阶&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;Java基础语法,OO编程思想, 集合, IO, 异常, 泛型, 反射, 多线程, 函数式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;Web基础和工具&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;
+        &lt;h1 id=&quot;JAVA学习路线&quot;&gt;&lt;a href=&quot;#JAVA学习路线&quot; class=&quot;headerlink&quot; title=&quot;JAVA学习路线&quot;&gt;&lt;/a&gt;JAVA学习路线&lt;/h1&gt;&lt;h2 id=&quot;1-语言的入门和进阶&quot;&gt;&lt;a href=&quot;#1-语言的入门和进阶&quot; class=&quot;
       
     
     </summary>
@@ -48,24 +38,6 @@
     
     
       <category term="学习路线" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Learn Hexo</title>
-    <link href="http://yoursite.com/2019/02/26/Learn-Hexo/"/>
-    <id>http://yoursite.com/2019/02/26/Learn-Hexo/</id>
-    <published>2019-02-26T09:11:39.000Z</published>
-    <updated>2019-02-26T10:14:04.228Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="Learn-Hexo" scheme="http://yoursite.com/categories/Learn-Hexo/"/>
-    
-    
-      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
     
   </entry>
   
