@@ -6,15 +6,35 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-17T04:32:00.220Z</updated>
+  <updated>2020-01-15T09:19:32.261Z</updated>
   <id>http://yoursite.com/</id>
   
-  <author>
-    <name>yixin</name>
-    
-  </author>
-  
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>oracle安装</title>
+    <link href="http://yoursite.com/2020/01/15/oracle%E5%AE%89%E8%A3%85/"/>
+    <id>http://yoursite.com/2020/01/15/oracle安装/</id>
+    <published>2020-01-15T09:09:51.000Z</published>
+    <updated>2020-01-15T09:19:32.261Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="ORACLE安装与配置"><a href="#ORACLE安装与配置" class="headerlink" title="ORACLE安装与配置"></a>ORACLE安装与配置</h2><h3 id="（一）VMware挂载windows-server-2003"><a href="#（一）VMware挂载windows-server-2003" class="headerlink" title="（一）VMware挂载windows server 2003"></a>（一）VMware挂载windows server 2003</h3><ol><li><strong>下载： windows server 2003资源：</strong><a href="https://pan.baidu.com/s/1eO9nONUwHMWtnR227hhPJg" target="_blank" rel="noopener">https://pan.baidu.com/s/1eO9nONUwHMWtnR227hhPJg</a> 密码：mu8o</li><li><strong>vmware中打开扩展名为vmx的文件即可将windows2003系统挂载到VMware中：</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579075651163.png" alt="1579075651163"></p><h3 id="（二）网络配置"><a href="#（二）网络配置" class="headerlink" title="（二）网络配置"></a>（二）网络配置</h3><ol><li><strong>VMware 中选择菜单“编辑”–“虚拟网络编辑器”：</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579075869389.png" alt="1579075869389"></p><ol start="2"><li><strong>弹出的窗口中，点击“添加网络”按钮，名称为VMnet2 ，设置为仅主机方式，并设定子网IP为192.168.80.0，确定：</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076020455.png" alt="1579076020455"></p><ol start="3"><li><strong>设定虚拟操作系统的网络网卡</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076128650.png" alt="1579076128650"></p><ol start="4"><li><strong>右键点击虚拟操作系统，选择“设置”菜单项，弹出以下窗口</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076207346.png" alt="1579076207346"></p><ol start="5"><li><p><strong>设定虚拟操作系统的IP地址</strong></p><p>在虚拟机的操作系统中设定IP地址为192.168.80.10：</p></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076366081.png" alt="1579076366081"></p><ol start="6"><li><p><strong>设置本地的操作系统的虚拟网卡VMnet的IP为192.168.80.6</strong></p><p><strong>(与虚拟机中的操作系统的IP地址处于同一IP网段)</strong></p></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076609822.png" alt="1579076609822"></p><ol start="7"><li><strong>在本地操作系统打开命令行，用ping命令测试网络是否连接成功</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579076505767.png" alt="1579076505767"></p><h3 id="（三）安装ORACLE数据库"><a href="#（三）安装ORACLE数据库" class="headerlink" title="（三）安装ORACLE数据库"></a>（三）安装ORACLE数据库</h3><ol><li>oracle资源：<a href="https://pan.baidu.com/s/1O8I3S-gXJcV0b4ftMhycmg" target="_blank" rel="noopener">https://pan.baidu.com/s/1O8I3S-gXJcV0b4ftMhycmg</a> 密码：zgxg</li><li><strong>将“资源”文件夹ORACLE安装包解压拷贝到虚拟机的系统中，并双击解压目录下的setup.exe，出现安装界面，如下：</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579077149905.png" alt="1579077149905"></p><ol start="3"><li><strong>输入口令和确认口令，如：orcl，点击下一步，出现如下进度条，</strong></li></ol><p><strong><em>注：此口令即是管理员密码。</em></strong></p><p><img src="/2020/01/15/oracle安装/./oracle安装/1579077197799.png" alt="1579077197799"></p><ol start="4"><li><p><strong>出现产品特定的先决条件检测，点击“下一步”，出现“概要”界面，点击“安装”。</strong></p></li><li><p><strong>安装完成后，自动运行配置向导，完成后，出现“口令管理”界面，点击“确定”后，安装结束，点击“退出”</strong></p></li><li><p><strong>此时可以命令提示符下进行测试安装结果</strong></p><p><strong>输入:sqlplus system/orcl</strong></p><p><strong><em>orcl为你安装时输入的密码</em></strong></p></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579077517915.png" alt="1579077517915"></p><h3 id="（四）SQLPlus远程连接ORACLE数据库"><a href="#（四）SQLPlus远程连接ORACLE数据库" class="headerlink" title="（四）SQLPlus远程连接ORACLE数据库"></a>（四）SQLPlus远程连接ORACLE数据库</h3><ol><li><strong>instantclient_12_1资源：</strong><a href="https://pan.baidu.com/s/1jInKDOQiWX-flTUpiQ4gSQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1jInKDOQiWX-flTUpiQ4gSQ</a> 密码：jq85</li><li><strong>将“资源”文件夹中的instantclient_12_1拷贝到F盘根目录（任意根目录）</strong></li><li><strong>进入命令提示符，进入该目录，输入如下命令连接远程的ORACLE</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579077783587.png" alt="1579077783587"></p><h3 id="（五）PLSQL-Developer安装与配置"><a href="#（五）PLSQL-Developer安装与配置" class="headerlink" title="（五）PLSQL Developer安装与配置"></a>（五）PLSQL Developer安装与配置</h3><ol><li><strong>安装资源文件夹PLSQL+Developer资源：</strong><a href="https://pan.baidu.com/s/1zSUOXjBP2rn1awhCfYIStQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1zSUOXjBP2rn1awhCfYIStQ</a> 密码：irpa</li><li><strong>注意事项：安装目录不能有中文和空格，否则连接不上，将目录改为 D:\PLSQLDeveloper</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078000235.png" alt="1579078000235"></p><ol start="3"><li><strong>配置客户端路径，在弹出的登陆窗口中，点取消，Tools-&gt;&gt;Preferences</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078067927.png" alt="1579078067927"></p><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078162301.png" alt="1579078162301"></p><ol start="4"><li><strong>编辑ORA文件：在虚拟机ORACLE的以下安装目录中找到tnsnames.ora文件，拷贝到本地电脑的D盘根目录。</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078240936.png" alt="1579078240936"></p><p><strong>打开tnsnames.ora文件编辑，修改下图红色方框处</strong></p><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078298308.png" alt="1579078298308"></p><ol start="5"><li><strong>设置环境变量  TNS_ADMIN  为D盘根目录( tnsnames.ora所在目录 )</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078341089.png" alt="1579078341089"></p><ol start="6"><li><strong>进入系统，输入用户名system  密码orcl即可进入到软件主界面。</strong></li></ol><p><img src="/2020/01/15/oracle安装/./oracle安装/1579078495400.png" alt="1579078495400"></p><ol start="7"><li><strong>中文编码设置</strong></li></ol><p><em>查看服务器端编码SQL:select userenv(‘language’) from dual</em></p><p><em>我实际查到的结果为:AMERICAN_AMERICA.ZHS16GBK</em></p><p><em>计算机-&gt;属性-&gt;高级系统设置-&gt;环境变量-&gt;新建</em></p><p><em>设置变量名:NLS_LANG,变量值:第1步查到的值,我的是  AMERICAN_AMERICA.ZHS16GBK</em></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;ORACLE安装与配置&quot;&gt;&lt;a href=&quot;#ORACLE安装与配置&quot; class=&quot;headerlink&quot; title=&quot;ORACLE安装与配置&quot;&gt;&lt;/a&gt;ORACLE安装与配置&lt;/h2&gt;&lt;h3 id=&quot;（一）VMware挂载windows-server-200
+      
+    
+    </summary>
+    
+      <category term="JAVA" scheme="http://yoursite.com/categories/JAVA/"/>
+    
+    
+      <category term="学习路线" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
+    
+  </entry>
   
   <entry>
     <title>JAVA学习路线</title>
