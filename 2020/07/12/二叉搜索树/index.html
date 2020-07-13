@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/12/二叉搜索树/7.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/二叉搜索树/8.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/12/二叉搜索树/9.png">
-<meta property="og:updated_time" content="2020-07-12T06:04:14.397Z">
+<meta property="og:updated_time" content="2020-07-13T05:51:39.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二叉搜索树">
 <meta name="twitter:description" content="二叉搜索树思考 在 n 个动态的整数中搜索某个整数？（查看其是否存在） 假设使用动态数组存放元素，从第 0 个位置开始遍历搜索，平均时间复杂度：O(n)       0 1 2 3 4 5 6 7 8 9     31 66 17 15 28 20 59 88 45 56      如果维护一个有序的动态数组，使用二分搜索，最坏时间复杂度：O(logn) 但是添加、删除的平均时间复杂度是 O(n)">
@@ -427,12 +427,24 @@
                 
               
 
-              <time title="创建时间：2020-07-12 12:37:53 / 修改时间：14:04:14" itemprop="dateCreated datePublished" datetime="2020-07-12T12:37:53+08:00">2020-07-12</time>
+              <time title="创建时间：2020-07-12 12:37:53" itemprop="dateCreated datePublished" datetime="2020-07-12T12:37:53+08:00">2020-07-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-13 13:51:39" itemprop="dateModified" datetime="2020-07-13T13:51:39+08:00">2020-07-13</time>
               
             
           </span>
@@ -606,21 +618,19 @@
 </li>
 </ul>
 <h3 id="什么是二叉搜索树（Binary-Search-Tree）"><a href="#什么是二叉搜索树（Binary-Search-Tree）" class="headerlink" title="什么是二叉搜索树（Binary Search Tree）"></a>什么是二叉搜索树<strong>（Binary</strong> <strong>Search</strong> <strong>Tree）</strong></h3><ol>
-<li><p>二叉搜索树是二叉树的一种，是应用非常广泛的一种二叉树，英文简称为 BST</p>
-<p>又被称为：二叉查找树、二叉排序树</p>
-</li>
-</ol>
+<li><p>二叉搜索树是二叉树的一种，是应用非常广泛的一种二叉树，英文简称为 BST，又被称为：二叉查找树、二叉排序树</p>
 <ul>
-<li>任意一个节点的值都大于其左子树所有节点的值</li>
-<li>任意一个节点的值都小于其右子树所有节点的值</li>
-<li>它的左右子树也是一棵二叉搜索树</li>
+<li><p>任意一个节点的值都大于其左子树所有节点的值</p>
+</li>
+<li><p>任意一个节点的值都小于其右子树所有节点的值</p>
+</li>
+<li><p>它的左右子树也是一棵二叉搜索树</p>
+</li>
 </ul>
-<ol>
+</li>
 <li><p>二叉搜索树可以大大提高搜索数据的效率</p>
 </li>
 <li><p>二叉搜索树存储的元素必须具备可比较性</p>
-</li>
-</ol>
 <ul>
 <li><p>比如 int、double 等</p>
 </li>
@@ -629,6 +639,8 @@
 <li><p>不允许为 null</p>
 </li>
 </ul>
+</li>
+</ol>
 <p><img src="/2020/07/12/二叉搜索树/1.png" alt></p>
 <h3 id="二叉搜索树的接口设计"><a href="#二叉搜索树的接口设计" class="headerlink" title="二叉搜索树的接口设计"></a>二叉搜索树的接口设计</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span>	<span class="comment">// 元素的数量</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span>	<span class="comment">// 是否为空</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> <span class="comment">// 清空所有元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(E element)</span> <span class="comment">// 添加元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(E element)</span>	<span class="comment">// 删除元素</span></span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(E element)</span> <span class="comment">// 是否包含某元素</span></span></span><br></pre></td></tr></table></figure>
 <p>需要注意的是</p>
@@ -1488,7 +1500,11 @@
 
   
   
-    <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+    <script type="text/javascript" src="/js/src/love.js"></script>
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1505,9 +1521,5 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
 </script>
 <!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
-  
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<!-- hexo-inject:end --></body>
 </html>
