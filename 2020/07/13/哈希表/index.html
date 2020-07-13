@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="哈希表（HashTable）先来分析TreeMap（红黑树映射实现） 时间复杂度（平均）  添加、删除、搜索：O(logn)   特点  Key 必须具备可比较性  元素的分布是有顺序的   在实际应用中，很多时候的需求  Map 中存储的元素不需要讲究顺序  Map 中的 Key 不需要具备可比较性   不考虑顺序、不考虑 Key 的可比较性，Map 有更好的实现方案，平均时间复杂度可以达到 O">
+<meta name="keywords" content="算法,数据结构,红黑树,映射,哈希表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希表">
+<meta property="og:url" content="http://yoursite.com/2020/07/13/哈希表/index.html">
+<meta property="og:site_name" content="Croissant2097">
+<meta property="og:description" content="哈希表（HashTable）先来分析TreeMap（红黑树映射实现） 时间复杂度（平均）  添加、删除、搜索：O(logn)   特点  Key 必须具备可比较性  元素的分布是有顺序的   在实际应用中，很多时候的需求  Map 中存储的元素不需要讲究顺序  Map 中的 Key 不需要具备可比较性   不考虑顺序、不考虑 Key 的可比较性，Map 有更好的实现方案，平均时间复杂度可以达到 O">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/哈希表/7.png">
+<meta property="og:updated_time" content="2020-07-13T08:29:55.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哈希表">
+<meta name="twitter:description" content="哈希表（HashTable）先来分析TreeMap（红黑树映射实现） 时间复杂度（平均）  添加、删除、搜索：O(logn)   特点  Key 必须具备可比较性  元素的分布是有顺序的   在实际应用中，很多时候的需求  Map 中存储的元素不需要讲究顺序  Map 中的 Key 不需要具备可比较性   不考虑顺序、不考虑 Key 的可比较性，Map 有更好的实现方案，平均时间复杂度可以达到 O">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/13/哈希表/1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Croissant2097" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/13/哈希表/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>哈希表 | Croissant2097</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Croissant2097</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Record & Share & Learn</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Croissant2097" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/哈希表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/pic.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Croissant2097">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">哈希表
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-07-13 14:35:39 / 修改时间：16:29:55" itemprop="dateCreated datePublished" datetime="2020-07-13T14:35:39+08:00">2020-07-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/映射/" itemprop="url" rel="index"><span itemprop="name">映射</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/映射/哈希表/" itemprop="url" rel="index"><span itemprop="name">哈希表</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">2.2k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">2 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="哈希表（HashTable）"><a href="#哈希表（HashTable）" class="headerlink" title="哈希表（HashTable）"></a>哈希表（HashTable）</h1><h2 id="先来分析TreeMap（）"><a href="#先来分析TreeMap（）" class="headerlink" title="先来分析TreeMap（）"></a>先来分析TreeMap（<a href="/2020/07/13/映射/" title="红黑树映射实现">红黑树映射实现</a>）</h2><ul>
+<li><p>时间复杂度（平均）</p>
+</li>
+<li><p>添加、删除、搜索：O(logn)</p>
+</li>
+</ul>
+<p><strong>特点</strong></p>
+<ul>
+<li><p>Key 必须具备可比较性</p>
+</li>
+<li><p>元素的分布是有顺序的</p>
+</li>
+</ul>
+<p><strong>在实际应用中，很多时候的需求</strong></p>
+<ul>
+<li><p>Map 中存储的元素不需要讲究顺序</p>
+</li>
+<li><p>Map 中的 Key 不需要具备可比较性</p>
+</li>
+</ul>
+<p>不考虑顺序、不考虑 Key 的可比较性，Map 有更好的实现方案，平均时间复杂度可以达到 O(1)，那就是<strong>采取哈希表来实现 Map</strong></p>
+<h2 id="什么是哈希表（HashTable）"><a href="#什么是哈希表（HashTable）" class="headerlink" title="什么是哈希表（HashTable）"></a>什么是哈希表（HashTable）</h2><p>哈希表也叫做散列表（ hash 有“剁碎”的意思）</p>
+<p>添加、搜索、删除的流程都是类似的</p>
+<ol>
+<li><p><strong>利用哈希函数生成 key 对应的 index【O(1)】</strong></p>
+</li>
+<li><p><strong>根据 index 操作定位数组元素【O(1)】</strong></p>
+</li>
+</ol>
+<p>哈希表是【<strong>空间换时间</strong>】的典型应用</p>
+<p>哈希函数，也叫做散列函数</p>
+<p>哈希表内部的数组元素，很多地方也叫 Bucket（桶），整个数组叫 Buckets 或者 Bucket Array</p>
+<p><img src="/2020/07/13/哈希表/1.png" alt></p>
+<h2 id="哈希冲突（Hash-Collision）"><a href="#哈希冲突（Hash-Collision）" class="headerlink" title="哈希冲突（Hash Collision）"></a>哈希冲突（Hash Collision）</h2><p>哈希冲突也叫做哈希碰撞</p>
+<p>2 个不同的 key，经过哈希函数计算出相同的结果</p>
+<p><strong>key1 ≠ key2 ，hash(key1) = hash(key2)</strong></p>
+<p><img src="/2020/07/13/哈希表/2.png" alt></p>
+<p><strong>解决哈希冲突的常见方法</strong></p>
+<ol>
+<li><p>开放定址法（Open Addressing）</p>
+<p>按照一定规则向其他地址探测，直到遇到空桶</p>
+</li>
+<li><p>再哈希法（Re-Hashing）</p>
+<p>设计多个哈希函数</p>
+</li>
+<li><p>链地址法（Separate Chaining）</p>
+<p>比如通过链表将同一index的元素串起来</p>
+</li>
+</ol>
+<h2 id="JDK1-8的哈希冲突解决方案"><a href="#JDK1-8的哈希冲突解决方案" class="headerlink" title="JDK1.8的哈希冲突解决方案"></a>JDK1.8的哈希冲突解决方案</h2><p><strong>JDK1.8中的哈希表是使用链表+红黑树解决哈希冲突</strong></p>
+<ol>
+<li><p>默认使用单向链表将元素串起来</p>
+</li>
+<li><p>在添加元素时，可能会<strong>由单向链表转为红黑树来存储元素</strong></p>
+<p>比如当哈希表容量 ≥ 64 且 单向链表的节点数量大于 8 时</p>
+<p>当红黑树节点数量少到一定程度时，又会转为单向链表</p>
+</li>
+</ol>
+<p><img src="/2020/07/13/哈希表/3.png" alt></p>
+<h2 id="哈希函数"><a href="#哈希函数" class="headerlink" title="哈希函数"></a>哈希函数</h2><p>哈希表中哈希函数的实现步骤大概如下</p>
+<ol>
+<li><p>先生成 key 的哈希值（必须是整数）</p>
+</li>
+<li><p>再让 key 的哈希值跟数组的大小进行相关运算，生成一个索引值</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hash_code(key) % table.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>为了提高效率，可以使用 &amp; 位运算取代 % 运算【前提：将数组的长度设计为 2 的幂（2n）】</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:right"><strong>1100  1010</strong></th>
+<th style="text-align:right"><strong>1011  1100</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><strong>&amp;  1111</strong></td>
+<td style="text-align:right"><strong>&amp;  1111</strong></td>
+</tr>
+<tr>
+<td style="text-align:right"><strong>1010</strong></td>
+<td style="text-align:right"><strong>1100</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hash_code(key) % (table.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>良好的哈希函数</strong></p>
+<p>让哈希值更加均匀分布 → 减少哈希冲突次数 → 提升哈希表的性能</p>
+<h2 id="如何生成key的哈希值"><a href="#如何生成key的哈希值" class="headerlink" title="如何生成key的哈希值"></a>如何生成key的哈希值</h2><p>key 的常见种类可能有</p>
+<p><strong>整数、浮点数、字符串、自定义对象</strong></p>
+<p>不同种类的 key，哈希值的生成方式不一样，但目标是一致的</p>
+<p>尽量让每个 key 的哈希值是唯一的</p>
+<p>尽量让 key 的所有信息参与运算</p>
+<p><strong>在Java中，HashMap 的 key 必须实现 hashCode、equals 方法，也允许 key 为 null</strong></p>
+<h3 id="整数的哈希值"><a href="#整数的哈希值" class="headerlink" title="整数的哈希值"></a>整数的哈希值</h3><p>整数值当做哈希值</p>
+<p>比如 10 的哈希值就是 10</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">(<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="浮点数的哈希值"><a href="#浮点数的哈希值" class="headerlink" title="浮点数的哈希值"></a>浮点数的哈希值</h3><p>将存储的二进制格式转为整数值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">(<span class="keyword">float</span> value)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> floatToIntBits(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Long和Double的哈希值"><a href="#Long和Double的哈希值" class="headerlink" title="Long和Double的哈希值"></a>Long和Double的哈希值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">(<span class="keyword">long</span> value)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)(value ^ (value &gt;&gt;&gt; <span class="number">32</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">(<span class="keyword">double</span> value)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> bits = doubleToLongBits(value);</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>)(bits ^ (bits &gt;&gt;&gt; <span class="number">32</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>>&gt;&gt; 和 ^ 的作用是？</strong></p>
+<p><strong>高32bit 和 低32bit 混合计算出 32bit 的哈希值</strong></p>
+<p><strong>充分利用所有信息计算出哈希值</strong></p>
+<p><img src="/2020/07/13/哈希表/4.png" alt></p>
+<h3 id="字符串的哈希值"><a href="#字符串的哈希值" class="headerlink" title="字符串的哈希值"></a>字符串的哈希值</h3><p>字符串是由若干个字符组成的</p>
+<p>比如字符串 jack，由 j、a、c、k 四个字符组成（字符的本质就是一个整数）</p>
+<p>因此，jack 的哈希值可以表示为 $ j ∗ n^3 + a ∗ n^2 + c ∗ n^1 + k ∗ n^0$，等价于 $[ ( j ∗ n + a ) ∗ n + c ] ∗ n + k$</p>
+<p>在JDK中，乘数 n 为 31，为什么使用 31？</p>
+<p><strong>31 是一个奇素数，JVM会将 31 * i 优化成 (i &lt;&lt; 5) – i</strong></p>
+<script type="math/tex; mode=display">31 * i = (2^5 - 1) * i = i * 2^5 - i = (i << 5) -i</script><p>31不仅仅是符合$2^n – 1$，它是个<strong>奇素数（既是奇数，又是素数，也就是质数）</strong></p>
+<p><strong>素数和其他数相乘的结果比其他方式更容易产成唯一性，减少哈希冲突</strong></p>
+<p>最终选择31是经过观测分布结果后的选择</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String string = <span class="string">"jack"</span>;</span><br><span class="line"><span class="keyword">int</span> hashCode = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> len = string.length();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)&#123;</span><br><span class="line">    <span class="keyword">char</span> c = string.charAt(i);</span><br><span class="line">    <span class="comment">// hashCode = 31 * hashCode + c;</span></span><br><span class="line">    hashCode = (hashCode &lt;&lt; <span class="number">5</span>) - hashCode + c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义对象的哈希值"><a href="#自定义对象的哈希值" class="headerlink" title="自定义对象的哈希值"></a>自定义对象的哈希值</h3><p>自定义对象作为 key，最好同时<strong>重写 hashCode 、equals 方法</strong></p>
+<ol>
+<li><p>equals ：用以判断 2 个 key 是否为同一个 key</p>
+<ul>
+<li><p><strong>自反性</strong>：对于任何非 null 的 x，x.equals(x)必须返回true</p>
+</li>
+<li><p><strong>对称性</strong>：对于任何非 null 的 x、y，如果 y.equals(x) 返回 true，x.equals(y) 必须返回 true</p>
+</li>
+<li><p><strong>传递性</strong>：对于任何非 null 的 x、y、z，如果 x.equals(y)、y.equals(z) 返回 true，那么x.equals(z) 必须 返回 true</p>
+</li>
+<li><p><strong>一致性</strong>：对于任何非 null 的 x、y，只要 equals 的比较操作在对象中所用的信息没有被修改，多次调用</p>
+</li>
+<li><p>x.equals(y) 就会一致地返回 true，或者一致地返回 false</p>
+</li>
+<li><p>对于任何非 null 的 x，x.equals(null) 必须返回 false</p>
+</li>
+</ul>
+</li>
+<li><p>hashCode ：必须保证 equals 为 true 的 2 个 key 的哈希值一样</p>
+</li>
+<li><p>反过来 hashCode 相等的 key，不一定 equals 为 true</p>
+</li>
+<li><p>不重写 hashCode 方法只重写 equals 会有什么后果？</p>
+<p>可能会导致 2 个 equals 为 true 的 key 同时存在哈希表中</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Person</span>&gt; </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">float</span> height;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(<span class="keyword">int</span> age, <span class="keyword">float</span> height, String name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">		<span class="keyword">this</span>.height = height;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 用来比较2个对象是否相等</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 内存地址</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">this</span> == obj) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">if</span> (obj == <span class="keyword">null</span> || obj.getClass() != getClass()) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">		<span class="comment">// if (obj == null || !(obj instanceof Person)) return false;</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 比较成员变量</span></span><br><span class="line">		Person person = (Person) obj;</span><br><span class="line">		<span class="keyword">return</span> person.age == age</span><br><span class="line">				&amp;&amp; person.height == height</span><br><span class="line">				&amp;&amp; (person.name == <span class="keyword">null</span> ? name == <span class="keyword">null</span> : person.name.equals(name));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> hashCode = Integer.hashCode(age);</span><br><span class="line">		hashCode = hashCode * <span class="number">31</span> + Float.hashCode(height);</span><br><span class="line">		hashCode = hashCode * <span class="number">31</span> + (name != <span class="keyword">null</span> ? name.hashCode() : <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">return</span> hashCode;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Person o)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age - o.age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="哈希值的进一步处理：扰动计算"><a href="#哈希值的进一步处理：扰动计算" class="headerlink" title="哈希值的进一步处理：扰动计算"></a>哈希值的进一步处理：扰动计算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> hash = key.hashCode();</span><br><span class="line">    <span class="keyword">return</span> hash ^ (hash &gt;&gt;&gt; <span class="number">16</span>) &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="装填因子"><a href="#装填因子" class="headerlink" title="装填因子"></a>装填因子</h2><p>装填因子（Load Factor）：节点总数量 / 哈希表桶数组长度，也叫做负载因子</p>
+<p>在JDK1.8的HashMap中，如果装填因子超过0.75，就扩容为原来的2倍</p>
+<h2 id="TreeMap-vs-HashMap"><a href="#TreeMap-vs-HashMap" class="headerlink" title="TreeMap vs HashMap"></a>TreeMap vs HashMap</h2><p><strong>何时选择TreeMap：元素具备可比较性且要求升序遍历（按照元素从小到大）</strong></p>
+<p><strong>何时选择HashMap：无序遍历</strong></p>
+<h2 id="HashMap代码实现"><a href="#HashMap代码实现" class="headerlink" title="HashMap代码实现"></a>HashMap代码实现</h2><h3 id="Map接口定义"><a href="#Map接口定义" class="headerlink" title="Map接口定义"></a>Map接口定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Map</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function">V <span class="title">put</span><span class="params">(K key, V value)</span></span>;</span><br><span class="line">	<span class="function">V <span class="title">get</span><span class="params">(K key)</span></span>;</span><br><span class="line">	<span class="function">V <span class="title">remove</span><span class="params">(K key)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(K key)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(V value)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">traversal</span><span class="params">(Visitor&lt;K, V&gt; visitor)</span></span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Visitor</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">		<span class="keyword">boolean</span> stop;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">visit</span><span class="params">(K key, V value)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="一些简单的函数"><a href="#一些简单的函数" class="headerlink" title="一些简单的函数"></a>一些简单的函数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> RED = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> BLACK = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> Node&lt;K, V&gt;[] table;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// 初始容量 2^4</span></span><br><span class="line">    <span class="comment">// 装填因子，大于0.75扩容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        table = <span class="keyword">new</span> Node[DEFAULT_CAPACITY];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="comment">// 清空哈希表</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (size == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; table.length; i++) &#123;</span><br><span class="line">            table[i] = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建节点</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Node&lt;K, V&gt; <span class="title">createNode</span><span class="params">(K key, V value, Node&lt;K, V&gt; parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Node&lt;&gt;(key, value, parent);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 红黑树节点左旋</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateLeft</span><span class="params">(Node&lt;K, V&gt; grand)</span> </span>&#123;</span><br><span class="line">        Node&lt;K, V&gt; parent = grand.right;</span><br><span class="line">        Node&lt;K, V&gt; child = parent.left;</span><br><span class="line">        grand.right = child;</span><br><span class="line">        parent.left = grand;</span><br><span class="line">        afterRotate(grand, parent, child);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 红黑树节点右旋</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateRight</span><span class="params">(Node&lt;K, V&gt; grand)</span> </span>&#123;</span><br><span class="line">        Node&lt;K, V&gt; parent = grand.left;</span><br><span class="line">        Node&lt;K, V&gt; child = parent.right;</span><br><span class="line">        grand.left = child;</span><br><span class="line">        parent.right = grand;</span><br><span class="line">        afterRotate(grand, parent, child);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 红黑树节点选择之后的修复</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">afterRotate</span><span class="params">(Node&lt;K, V&gt; grand, Node&lt;K, V&gt; parent, Node&lt;K, V&gt; child)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 让parent称为子树的根节点</span></span><br><span class="line">        parent.parent = grand.parent;</span><br><span class="line">        <span class="keyword">if</span> (grand.isLeftChild()) &#123;</span><br><span class="line">            grand.parent.left = parent;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grand.isRightChild()) &#123;</span><br><span class="line">            grand.parent.right = parent;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// grand是root节点</span></span><br><span class="line">            table[index(grand)] = parent;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新child的parent</span></span><br><span class="line">        <span class="keyword">if</span> (child != <span class="keyword">null</span>) &#123;</span><br><span class="line">            child.parent = grand;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 更新grand的parent</span></span><br><span class="line">        grand.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">color</span><span class="params">(Node&lt;K, V&gt; node, <span class="keyword">boolean</span> color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> node;</span><br><span class="line">        node.color = color;</span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">red</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color(node, RED);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">black</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color(node, BLACK);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">colorOf</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> node == <span class="keyword">null</span> ? BLACK : node.color;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isBlack</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> colorOf(node) == BLACK;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isRed</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> colorOf(node) == RED;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="生成Hash值"><a href="#生成Hash值" class="headerlink" title="生成Hash值"></a>生成Hash值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">index</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hash(key) &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> hash = key.hashCode();</span><br><span class="line">    <span class="keyword">return</span> hash ^ (hash &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">index</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> node.hash &amp; (table.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash节点定义"><a href="#Hash节点定义" class="headerlink" title="Hash节点定义"></a>Hash节点定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> hash;</span><br><span class="line">    K key;</span><br><span class="line">    V value;</span><br><span class="line">    <span class="keyword">boolean</span> color = RED;</span><br><span class="line">    Node&lt;K, V&gt; left;</span><br><span class="line">    Node&lt;K, V&gt; right;</span><br><span class="line">    Node&lt;K, V&gt; parent;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(K key, V value, Node&lt;K, V&gt; parent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">int</span> hash = key == <span class="keyword">null</span> ? <span class="number">0</span> : key.hashCode();</span><br><span class="line">        <span class="keyword">this</span>.hash = hash ^ (hash &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.parent = parent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasTwoChildren</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> left != <span class="keyword">null</span> &amp;&amp; right != <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLeftChild</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent != <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span> == parent.left;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isRightChild</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parent != <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span> == parent.right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Node&lt;K, V&gt; <span class="title">sibling</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isLeftChild()) &#123;</span><br><span class="line">            <span class="keyword">return</span> parent.right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isRightChild()) &#123;</span><br><span class="line">            <span class="keyword">return</span> parent.left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Node_"</span> + key + <span class="string">"_"</span> + value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建节点"><a href="#创建节点" class="headerlink" title="创建节点"></a>创建节点</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> Node&lt;K, V&gt; <span class="title">createNode</span><span class="params">(K key, V value, Node&lt;K, V&gt; parent)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Node&lt;&gt;(key, value, parent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="node函数查找节点"><a href="#node函数查找节点" class="headerlink" title="node函数查找节点"></a>node函数查找节点</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">node</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K, V&gt; root = table[index(key)];</span><br><span class="line">    <span class="keyword">return</span> root == <span class="keyword">null</span> ? <span class="keyword">null</span> : node(root, key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">node</span><span class="params">(Node&lt;K, V&gt; node, K k1)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h1 = hash(k1);</span><br><span class="line">    <span class="comment">// 存储查找结果</span></span><br><span class="line">    Node&lt;K, V&gt; result = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">int</span> cmp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (node != <span class="keyword">null</span>) &#123;</span><br><span class="line">        K k2 = node.key;</span><br><span class="line">        <span class="keyword">int</span> h2 = node.hash;</span><br><span class="line">        <span class="comment">// 先比较哈希值</span></span><br><span class="line">        <span class="keyword">if</span> (h1 &gt; h2) &#123;</span><br><span class="line">            node = node.right;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (h1 &lt; h2) &#123;</span><br><span class="line">            node = node.left;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Objects.equals(k1, k2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k1 != <span class="keyword">null</span> &amp;&amp; k2 != <span class="keyword">null</span> </span><br><span class="line">                   &amp;&amp; k1 <span class="keyword">instanceof</span> Comparable</span><br><span class="line">                   &amp;&amp; k1.getClass() == k2.getClass()</span><br><span class="line">                   &amp;&amp; (cmp = ((Comparable)k1).compareTo(k2)) != <span class="number">0</span>) &#123;</span><br><span class="line">            node = cmp &gt; <span class="number">0</span> ? node.right : node.left;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node.right != <span class="keyword">null</span> &amp;&amp; (result = node(node.right, k1)) != <span class="keyword">null</span>) &#123; </span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 只能往左边找</span></span><br><span class="line">            node = node.left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash添加-put-K-key-V-value"><a href="#Hash添加-put-K-key-V-value" class="headerlink" title="Hash添加 put(K key, V value)"></a>Hash添加 put(K key, V value)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    resize();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> index = index(key);</span><br><span class="line">    <span class="comment">// 取出index位置的红黑树根节点</span></span><br><span class="line">    Node&lt;K, V&gt; root = table[index];</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">        root = createNode(key, value, <span class="keyword">null</span>);</span><br><span class="line">        table[index] = root;</span><br><span class="line">        size++;</span><br><span class="line">        fixAfterPut(root);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加新的节点到红黑树上面</span></span><br><span class="line">    Node&lt;K, V&gt; parent = root;</span><br><span class="line">    Node&lt;K, V&gt; node = root;</span><br><span class="line">    <span class="keyword">int</span> cmp = <span class="number">0</span>;</span><br><span class="line">    K k1 = key;</span><br><span class="line">    <span class="keyword">int</span> h1 = hash(k1);</span><br><span class="line">    Node&lt;K, V&gt; result = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">boolean</span> searched = <span class="keyword">false</span>; <span class="comment">// 是否已经搜索过这个key</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        parent = node;</span><br><span class="line">        K k2 = node.key;</span><br><span class="line">        <span class="keyword">int</span> h2 = node.hash;</span><br><span class="line">        <span class="keyword">if</span> (h1 &gt; h2) &#123;</span><br><span class="line">            cmp = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (h1 &lt; h2) &#123;</span><br><span class="line">            cmp = -<span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Objects.equals(k1, k2)) &#123;</span><br><span class="line">            cmp = <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k1 != <span class="keyword">null</span> &amp;&amp; k2 != <span class="keyword">null</span> </span><br><span class="line">                   &amp;&amp; k1 <span class="keyword">instanceof</span> Comparable</span><br><span class="line">                   &amp;&amp; k1.getClass() == k2.getClass()</span><br><span class="line">                   &amp;&amp; (cmp = ((Comparable)k1).compareTo(k2)) != <span class="number">0</span>) &#123;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (searched) &#123; <span class="comment">// 已经扫描了</span></span><br><span class="line">            cmp = System.identityHashCode(k1) - System.identityHashCode(k2);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// searched == false; 还没有扫描，然后再根据内存地址大小决定左右</span></span><br><span class="line">            <span class="keyword">if</span> ((node.left != <span class="keyword">null</span> &amp;&amp; (result = node(node.left, k1)) != <span class="keyword">null</span>)</span><br><span class="line">                || (node.right != <span class="keyword">null</span> &amp;&amp; (result = node(node.right, k1)) != <span class="keyword">null</span>)) &#123;</span><br><span class="line">                <span class="comment">// 已经存在这个key</span></span><br><span class="line">                node = result;</span><br><span class="line">                cmp = <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// 不存在这个key</span></span><br><span class="line">                searched = <span class="keyword">true</span>;</span><br><span class="line">                cmp = System.identityHashCode(k1) - System.identityHashCode(k2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            node = node.right;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            node = node.left;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 相等</span></span><br><span class="line">            V oldValue = node.value;</span><br><span class="line">            node.key = key;</span><br><span class="line">            node.value = value;</span><br><span class="line">            node.hash = h1;</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (node != <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 看看插入到父节点的哪个位置</span></span><br><span class="line">    Node&lt;K, V&gt; newNode = createNode(key, value, parent);</span><br><span class="line">    <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        parent.right = newNode;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        parent.left = newNode;</span><br><span class="line">    &#125;</span><br><span class="line">    size++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新添加节点之后的处理</span></span><br><span class="line">    fixAfterPut(newNode);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash添加后修复红黑树"><a href="#Hash添加后修复红黑树" class="headerlink" title="Hash添加后修复红黑树"></a>Hash添加后修复红黑树</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fixAfterPut</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">    Node&lt;K, V&gt; parent = node.parent;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加的是根节点 或者 上溢到达了根节点</span></span><br><span class="line">    <span class="keyword">if</span> (parent == <span class="keyword">null</span>) &#123;</span><br><span class="line">        black(node);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果父节点是黑色，直接返回</span></span><br><span class="line">    <span class="keyword">if</span> (isBlack(parent)) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 叔父节点</span></span><br><span class="line">    Node&lt;K, V&gt; uncle = parent.sibling();</span><br><span class="line">    <span class="comment">// 祖父节点</span></span><br><span class="line">    Node&lt;K, V&gt; grand = red(parent.parent);</span><br><span class="line">    <span class="keyword">if</span> (isRed(uncle)) &#123; <span class="comment">// 叔父节点是红色【B树节点上溢】</span></span><br><span class="line">        black(parent);</span><br><span class="line">        black(uncle);</span><br><span class="line">        <span class="comment">// 把祖父节点当做是新添加的节点</span></span><br><span class="line">        fixAfterPut(grand);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 叔父节点不是红色</span></span><br><span class="line">    <span class="keyword">if</span> (parent.isLeftChild()) &#123; <span class="comment">// L</span></span><br><span class="line">        <span class="keyword">if</span> (node.isLeftChild()) &#123; <span class="comment">// LL</span></span><br><span class="line">            black(parent);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// LR</span></span><br><span class="line">            black(node);</span><br><span class="line">            rotateLeft(parent);</span><br><span class="line">        &#125;</span><br><span class="line">        rotateRight(grand);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// R</span></span><br><span class="line">        <span class="keyword">if</span> (node.isLeftChild()) &#123; <span class="comment">// RL</span></span><br><span class="line">            black(node);</span><br><span class="line">            rotateRight(parent);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// RR</span></span><br><span class="line">            black(parent);</span><br><span class="line">        &#125;</span><br><span class="line">        rotateLeft(grand);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash删除-key、节点"><a href="#Hash删除-key、节点" class="headerlink" title="Hash删除(key、节点)"></a>Hash删除(key、节点)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="comment">// 删除key</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> remove(node(key));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> V <span class="title">remove</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    Node&lt;K, V&gt; willNode = node;</span><br><span class="line"></span><br><span class="line">    size--;</span><br><span class="line"></span><br><span class="line">    V oldValue = node.value;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (node.hasTwoChildren()) &#123; <span class="comment">// 度为2的节点</span></span><br><span class="line">        <span class="comment">// 找到后继节点</span></span><br><span class="line">        Node&lt;K, V&gt; s = successor(node);</span><br><span class="line">        <span class="comment">// 用后继节点的值覆盖度为2的节点的值</span></span><br><span class="line">        node.key = s.key;</span><br><span class="line">        node.value = s.value;</span><br><span class="line">        node.hash = s.hash;</span><br><span class="line">        <span class="comment">// 删除后继节点</span></span><br><span class="line">        node = s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除node节点（node的度必然是1或者0）</span></span><br><span class="line">    Node&lt;K, V&gt; replacement = node.left != <span class="keyword">null</span> ? node.left : node.right;</span><br><span class="line">    <span class="keyword">int</span> index = index(node);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (replacement != <span class="keyword">null</span>) &#123; <span class="comment">// node是度为1的节点</span></span><br><span class="line">        <span class="comment">// 更改parent</span></span><br><span class="line">        replacement.parent = node.parent;</span><br><span class="line">        <span class="comment">// 更改parent的left、right的指向</span></span><br><span class="line">        <span class="keyword">if</span> (node.parent == <span class="keyword">null</span>) &#123; <span class="comment">// node是度为1的节点并且是根节点</span></span><br><span class="line">            table[index] = replacement;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node == node.parent.left) &#123;</span><br><span class="line">            node.parent.left = replacement;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// node == node.parent.right</span></span><br><span class="line">            node.parent.right = replacement;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 删除节点之后的处理</span></span><br><span class="line">        fixAfterRemove(replacement);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (node.parent == <span class="keyword">null</span>) &#123; <span class="comment">// node是叶子节点并且是根节点</span></span><br><span class="line">        table[index] = <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// node是叶子节点，但不是根节点</span></span><br><span class="line">        <span class="keyword">if</span> (node == node.parent.left) &#123;</span><br><span class="line">            node.parent.left = <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// node == node.parent.right</span></span><br><span class="line">            node.parent.right = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 删除节点之后的处理</span></span><br><span class="line">        fixAfterRemove(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 交给子类去处理</span></span><br><span class="line">    afterRemove(willNode, node);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> oldValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash删除后修复红黑树"><a href="#Hash删除后修复红黑树" class="headerlink" title="Hash删除后修复红黑树"></a>Hash删除后修复红黑树</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fixAfterRemove</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果删除的节点是红色</span></span><br><span class="line">    <span class="comment">// 或者 用以取代删除节点的子节点是红色</span></span><br><span class="line">    <span class="keyword">if</span> (isRed(node)) &#123;</span><br><span class="line">        black(node);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node&lt;K, V&gt; parent = node.parent;</span><br><span class="line">    <span class="keyword">if</span> (parent == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除的是黑色叶子节点【下溢】</span></span><br><span class="line">    <span class="comment">// 判断被删除的node是左还是右</span></span><br><span class="line">    <span class="keyword">boolean</span> left = parent.left == <span class="keyword">null</span> || node.isLeftChild();</span><br><span class="line">    Node&lt;K, V&gt; sibling = left ? parent.right : parent.left;</span><br><span class="line">    <span class="keyword">if</span> (left) &#123; <span class="comment">// 被删除的节点在左边，兄弟节点在右边</span></span><br><span class="line">        <span class="keyword">if</span> (isRed(sibling)) &#123; <span class="comment">// 兄弟节点是红色</span></span><br><span class="line">            black(sibling);</span><br><span class="line">            red(parent);</span><br><span class="line">            rotateLeft(parent);</span><br><span class="line">            <span class="comment">// 更换兄弟</span></span><br><span class="line">            sibling = parent.right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 兄弟节点必然是黑色</span></span><br><span class="line">        <span class="keyword">if</span> (isBlack(sibling.left) &amp;&amp; isBlack(sibling.right)) &#123;</span><br><span class="line">            <span class="comment">// 兄弟节点没有1个红色子节点，父节点要向下跟兄弟节点合并</span></span><br><span class="line">            <span class="keyword">boolean</span> parentBlack = isBlack(parent);</span><br><span class="line">            black(parent);</span><br><span class="line">            red(sibling);</span><br><span class="line">            <span class="keyword">if</span> (parentBlack) &#123;</span><br><span class="line">                fixAfterRemove(parent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 兄弟节点至少有1个红色子节点，向兄弟节点借元素</span></span><br><span class="line">            <span class="comment">// 兄弟节点的左边是黑色，兄弟要先旋转</span></span><br><span class="line">            <span class="keyword">if</span> (isBlack(sibling.right)) &#123;</span><br><span class="line">                rotateRight(sibling);</span><br><span class="line">                sibling = parent.right;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            color(sibling, colorOf(parent));</span><br><span class="line">            black(sibling.right);</span><br><span class="line">            black(parent);</span><br><span class="line">            rotateLeft(parent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 被删除的节点在右边，兄弟节点在左边</span></span><br><span class="line">        <span class="keyword">if</span> (isRed(sibling)) &#123; <span class="comment">// 兄弟节点是红色</span></span><br><span class="line">            black(sibling);</span><br><span class="line">            red(parent);</span><br><span class="line">            rotateRight(parent);</span><br><span class="line">            <span class="comment">// 更换兄弟</span></span><br><span class="line">            sibling = parent.left;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 兄弟节点必然是黑色</span></span><br><span class="line">        <span class="keyword">if</span> (isBlack(sibling.left) &amp;&amp; isBlack(sibling.right)) &#123;</span><br><span class="line">            <span class="comment">// 兄弟节点没有1个红色子节点，父节点要向下跟兄弟节点合并</span></span><br><span class="line">            <span class="keyword">boolean</span> parentBlack = isBlack(parent);</span><br><span class="line">            black(parent);</span><br><span class="line">            red(sibling);</span><br><span class="line">            <span class="keyword">if</span> (parentBlack) &#123;</span><br><span class="line">                fixAfterRemove(parent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 兄弟节点至少有1个红色子节点，向兄弟节点借元素</span></span><br><span class="line">            <span class="comment">// 兄弟节点的左边是黑色，兄弟要先旋转</span></span><br><span class="line">            <span class="keyword">if</span> (isBlack(sibling.left)) &#123;</span><br><span class="line">                rotateLeft(sibling);</span><br><span class="line">                sibling = parent.left;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            color(sibling, colorOf(parent));</span><br><span class="line">            black(sibling.left);</span><br><span class="line">            black(parent);</span><br><span class="line">            rotateRight(parent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="红黑树后继节点"><a href="#红黑树后继节点" class="headerlink" title="红黑树后继节点"></a>红黑树后继节点</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Node&lt;K, V&gt; <span class="title">successor</span><span class="params">(Node&lt;K, V&gt; node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 前驱节点在左子树当中（right.left.left.left....）</span></span><br><span class="line">    Node&lt;K, V&gt; p = node.right;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (p.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">            p = p.left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从父节点、祖父节点中寻找前驱节点</span></span><br><span class="line">    <span class="keyword">while</span> (node.parent != <span class="keyword">null</span> &amp;&amp; node == node.parent.right) &#123;</span><br><span class="line">        node = node.parent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> node.parent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash查找（key、vaule）"><a href="#Hash查找（key、vaule）" class="headerlink" title="Hash查找（key、vaule）"></a>Hash查找（key、vaule）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="comment">// 得到key</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    Node&lt;K, V&gt; node = node(key);</span><br><span class="line">    <span class="keyword">return</span> node != <span class="keyword">null</span> ? node.value : <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsKey</span><span class="params">(K key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> node(key) != <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(V value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    Queue&lt;Node&lt;K, V&gt;&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; table.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (table[i] == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        queue.offer(table[i]);</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            Node&lt;K, V&gt; node = queue.poll();</span><br><span class="line">            <span class="keyword">if</span> (Objects.equals(value, node.value)) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                queue.offer(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                queue.offer(node.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Hash扩容"><a href="#Hash扩容" class="headerlink" title="Hash扩容"></a>Hash扩容</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 装填因子 &lt;= 0.75</span></span><br><span class="line">    <span class="keyword">if</span> (size / table.length &lt;= DEFAULT_LOAD_FACTOR) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    Node&lt;K, V&gt;[] oldTable = table;</span><br><span class="line">    table = <span class="keyword">new</span> Node[oldTable.length &lt;&lt; <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    Queue&lt;Node&lt;K, V&gt;&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; oldTable.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (oldTable[i] == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        queue.offer(oldTable[i]);</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            Node&lt;K, V&gt; node = queue.poll();</span><br><span class="line">            <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                queue.offer(node.left);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                queue.offer(node.right);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 挪动代码得放到最后面</span></span><br><span class="line">            moveNode(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="移动节点"><a href="#移动节点" class="headerlink" title="移动节点"></a>移动节点</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveNode</span><span class="params">(Node&lt;K, V&gt; newNode)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 重置</span></span><br><span class="line">    newNode.parent = <span class="keyword">null</span>;</span><br><span class="line">    newNode.left = <span class="keyword">null</span>;</span><br><span class="line">    newNode.right = <span class="keyword">null</span>;</span><br><span class="line">    newNode.color = RED;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> index = index(newNode);</span><br><span class="line">    <span class="comment">// 取出index位置的红黑树根节点</span></span><br><span class="line">    Node&lt;K, V&gt; root = table[index];</span><br><span class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">        root = newNode;</span><br><span class="line">        table[index] = root;</span><br><span class="line">        fixAfterPut(root);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加新的节点到红黑树上面</span></span><br><span class="line">    Node&lt;K, V&gt; parent = root;</span><br><span class="line">    Node&lt;K, V&gt; node = root;</span><br><span class="line">    <span class="keyword">int</span> cmp = <span class="number">0</span>;</span><br><span class="line">    K k1 = newNode.key;</span><br><span class="line">    <span class="keyword">int</span> h1 = newNode.hash;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        parent = node;</span><br><span class="line">        K k2 = node.key;</span><br><span class="line">        <span class="keyword">int</span> h2 = node.hash;</span><br><span class="line">        <span class="keyword">if</span> (h1 &gt; h2) &#123;</span><br><span class="line">            cmp = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (h1 &lt; h2) &#123;</span><br><span class="line">            cmp = -<span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k1 != <span class="keyword">null</span> &amp;&amp; k2 != <span class="keyword">null</span> </span><br><span class="line">                   &amp;&amp; k1 <span class="keyword">instanceof</span> Comparable</span><br><span class="line">                   &amp;&amp; k1.getClass() == k2.getClass()</span><br><span class="line">                   &amp;&amp; (cmp = ((Comparable)k1).compareTo(k2)) != <span class="number">0</span>) &#123;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cmp = System.identityHashCode(k1) - System.identityHashCode(k2);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            node = node.right;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            node = node.left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (node != <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 看看插入到父节点的哪个位置</span></span><br><span class="line">    newNode.parent = parent;</span><br><span class="line">    <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        parent.right = newNode;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        parent.left = newNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新添加节点之后的处理</span></span><br><span class="line">    fixAfterPut(newNode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h2><p>在HashMap的基础上维护元素的添加顺序，使得遍历的结果是遵从添加顺序的</p>
+<p>假设添加顺序是：37、21、31、41、97、95、52、42、83</p>
+<p><img src="/2020/07/13/哈希表/5.png" alt></p>
+<h4 id="LinkedHashMap-–-删除注意点"><a href="#LinkedHashMap-–-删除注意点" class="headerlink" title="LinkedHashMap – 删除注意点"></a>LinkedHashMap – 删除注意点</h4><p>删除度为2的节点node时（比如删除31）</p>
+<p>需要注意更换 node 与 前驱/后继节点的连接位置</p>
+<p><img src="/2020/07/13/哈希表/6.png" alt></p>
+<h4 id="LinkedHashMap-–-更换节点的连接位置"><a href="#LinkedHashMap-–-更换节点的连接位置" class="headerlink" title="LinkedHashMap – 更换节点的连接位置"></a>LinkedHashMap – 更换节点的连接位置</h4><p><img src="/2020/07/13/哈希表/7.png" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 交换prev</span></span><br><span class="line">LinkedNode&lt;K, V&gt; tmp = node1.prev;</span><br><span class="line">node1.prev = node2.prev;</span><br><span class="line">node2.prev = tmp;</span><br><span class="line"><span class="keyword">if</span> (node1.prev == <span class="keyword">null</span>) &#123;</span><br><span class="line">    first = node1;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    node1.prev.next = node1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (node2.prev == <span class="keyword">null</span>) &#123;</span><br><span class="line">    first = node2;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    node2.prev.next = node2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 交换next</span></span><br><span class="line">tmp = node1.next;</span><br><span class="line">node1.next = node2.next;</span><br><span class="line">node2.next = tmp;</span><br><span class="line"><span class="keyword">if</span> (node1.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">    last = node1;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    node1.next.prev = node1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (node2.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">    last = node2;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    node2.next.prev = node2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="LinkedHashMap代码实现"><a href="#LinkedHashMap代码实现" class="headerlink" title="LinkedHashMap代码实现"></a>LinkedHashMap代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedHashMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">HashMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> LinkedNode&lt;K, V&gt; first;</span><br><span class="line">	<span class="keyword">private</span> LinkedNode&lt;K, V&gt; last;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.clear();</span><br><span class="line">		first = <span class="keyword">null</span>;</span><br><span class="line">		last = <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">containsValue</span><span class="params">(V value)</span> </span>&#123;</span><br><span class="line">		LinkedNode&lt;K, V&gt; node = first;</span><br><span class="line">		<span class="keyword">while</span> (node != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (Objects.equals(value, node.value)) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">			node = node.next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">traversal</span><span class="params">(Visitor&lt;K, V&gt; visitor)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (visitor == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">		LinkedNode&lt;K, V&gt; node = first;</span><br><span class="line">		<span class="keyword">while</span> (node != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (visitor.visit(node.key, node.value)) <span class="keyword">return</span>;</span><br><span class="line">			node = node.next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterRemove</span><span class="params">(Node&lt;K, V&gt; willNode, Node&lt;K, V&gt; removedNode)</span> </span>&#123;</span><br><span class="line">		LinkedNode&lt;K, V&gt; node1 = (LinkedNode&lt;K, V&gt;) willNode;</span><br><span class="line">		LinkedNode&lt;K, V&gt; node2 = (LinkedNode&lt;K, V&gt;) removedNode;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (node1 != node2) &#123;</span><br><span class="line">			<span class="comment">// 交换linkedWillNode和linkedRemovedNode在链表中的位置</span></span><br><span class="line">			<span class="comment">// 交换prev</span></span><br><span class="line">			LinkedNode&lt;K, V&gt; tmp = node1.prev;</span><br><span class="line">			node1.prev = node2.prev;</span><br><span class="line">			node2.prev = tmp;</span><br><span class="line">			<span class="keyword">if</span> (node1.prev == <span class="keyword">null</span>) &#123;</span><br><span class="line">				first = node1;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				node1.prev.next = node1;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (node2.prev == <span class="keyword">null</span>) &#123;</span><br><span class="line">				first = node2;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				node2.prev.next = node2;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 交换next</span></span><br><span class="line">			tmp = node1.next;</span><br><span class="line">			node1.next = node2.next;</span><br><span class="line">			node2.next = tmp;</span><br><span class="line">			<span class="keyword">if</span> (node1.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">				last = node1;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				node1.next.prev = node1;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (node2.next == <span class="keyword">null</span>) &#123;</span><br><span class="line">				last = node2;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				node2.next.prev = node2;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		LinkedNode&lt;K, V&gt; prev = node2.prev;</span><br><span class="line">		LinkedNode&lt;K, V&gt; next = node2.next;</span><br><span class="line">		<span class="keyword">if</span> (prev == <span class="keyword">null</span>) &#123;</span><br><span class="line">			first = next;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			prev.next = next;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (next == <span class="keyword">null</span>) &#123;</span><br><span class="line">			last = prev;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			next.prev = prev;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Node&lt;K, V&gt; <span class="title">createNode</span><span class="params">(K key, V value, Node&lt;K, V&gt; parent)</span> </span>&#123;</span><br><span class="line">		LinkedNode node = <span class="keyword">new</span> LinkedNode(key, value, parent);</span><br><span class="line">		<span class="keyword">if</span> (first == <span class="keyword">null</span>) &#123;</span><br><span class="line">			first = last = node;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			last.next = node;</span><br><span class="line">			node.prev = last;</span><br><span class="line">			last = node;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> node;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedNode</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">Node</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">		LinkedNode&lt;K, V&gt; prev;</span><br><span class="line">		LinkedNode&lt;K, V&gt; next;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">LinkedNode</span><span class="params">(K key, V value, Node&lt;K, V&gt; parent)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">super</span>(key, value, parent);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+            <a href="/tags/红黑树/" rel="tag"># 红黑树</a>
+          
+            <a href="/tags/映射/" rel="tag"># 映射</a>
+          
+            <a href="/tags/哈希表/" rel="tag"># 哈希表</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/13/映射/" rel="next" title="映射">
+                <i class="fa fa-chevron-left"></i> 映射
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/pic.png" alt>
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Croissant2097" title="GitHub &rarr; https://github.com/Croissant2097" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/" title="https://hexo.io/zh-cn/" rel="noopener" target="_blank">Hexo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://google.com/" title="https://google.com/" rel="noopener" target="_blank">谷歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Croissant2097" title="https://github.com/Croissant2097" rel="noopener" target="_blank">myblog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希表（HashTable）"><span class="nav-number">1.</span> <span class="nav-text">哈希表（HashTable）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#先来分析TreeMap（）"><span class="nav-number">1.1.</span> <span class="nav-text">先来分析TreeMap（红黑树映射实现）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是哈希表（HashTable）"><span class="nav-number">1.2.</span> <span class="nav-text">什么是哈希表（HashTable）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希冲突（Hash-Collision）"><span class="nav-number">1.3.</span> <span class="nav-text">哈希冲突（Hash Collision）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK1-8的哈希冲突解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">JDK1.8的哈希冲突解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希函数"><span class="nav-number">1.5.</span> <span class="nav-text">哈希函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何生成key的哈希值"><span class="nav-number">1.6.</span> <span class="nav-text">如何生成key的哈希值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整数的哈希值"><span class="nav-number">1.6.1.</span> <span class="nav-text">整数的哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数的哈希值"><span class="nav-number">1.6.2.</span> <span class="nav-text">浮点数的哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Long和Double的哈希值"><span class="nav-number">1.6.3.</span> <span class="nav-text">Long和Double的哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的哈希值"><span class="nav-number">1.6.4.</span> <span class="nav-text">字符串的哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义对象的哈希值"><span class="nav-number">1.6.5.</span> <span class="nav-text">自定义对象的哈希值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#哈希值的进一步处理：扰动计算"><span class="nav-number">1.6.6.</span> <span class="nav-text">哈希值的进一步处理：扰动计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装填因子"><span class="nav-number">1.7.</span> <span class="nav-text">装填因子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TreeMap-vs-HashMap"><span class="nav-number">1.8.</span> <span class="nav-text">TreeMap vs HashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap代码实现"><span class="nav-number">1.9.</span> <span class="nav-text">HashMap代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map接口定义"><span class="nav-number">1.9.1.</span> <span class="nav-text">Map接口定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些简单的函数"><span class="nav-number">1.9.2.</span> <span class="nav-text">一些简单的函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成Hash值"><span class="nav-number">1.9.3.</span> <span class="nav-text">生成Hash值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash节点定义"><span class="nav-number">1.9.4.</span> <span class="nav-text">Hash节点定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建节点"><span class="nav-number">1.9.5.</span> <span class="nav-text">创建节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node函数查找节点"><span class="nav-number">1.9.6.</span> <span class="nav-text">node函数查找节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash添加-put-K-key-V-value"><span class="nav-number">1.9.7.</span> <span class="nav-text">Hash添加 put(K key, V value)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash添加后修复红黑树"><span class="nav-number">1.9.8.</span> <span class="nav-text">Hash添加后修复红黑树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash删除-key、节点"><span class="nav-number">1.9.9.</span> <span class="nav-text">Hash删除(key、节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash删除后修复红黑树"><span class="nav-number">1.9.10.</span> <span class="nav-text">Hash删除后修复红黑树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#红黑树后继节点"><span class="nav-number">1.9.11.</span> <span class="nav-text">红黑树后继节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash查找（key、vaule）"><span class="nav-number">1.9.12.</span> <span class="nav-text">Hash查找（key、vaule）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash扩容"><span class="nav-number">1.9.13.</span> <span class="nav-text">Hash扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动节点"><span class="nav-number">1.9.14.</span> <span class="nav-text">移动节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">1.10.</span> <span class="nav-text">LinkedHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedHashMap-–-删除注意点"><span class="nav-number">1.10.0.1.</span> <span class="nav-text">LinkedHashMap – 删除注意点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedHashMap-–-更换节点的连接位置"><span class="nav-number">1.10.0.2.</span> <span class="nav-text">LinkedHashMap – 更换节点的连接位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinkedHashMap代码实现"><span class="nav-number">1.10.0.3.</span> <span class="nav-text">LinkedHashMap代码实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">75k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:08</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+    <script type="text/javascript" src="/js/src/love.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
