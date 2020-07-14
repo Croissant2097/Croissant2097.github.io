@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[希尔排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[希尔排序（Shell Sort）什么是希尔排序 1959年由唐纳德·希尔（Donald Shell）提出 希尔排序把序列看作是一个矩阵，分成 𝑚 列，逐列进行排序 𝑚 从某个整数逐渐减为1 当 𝑚 为1时，整个序列将完全有序 因此，希尔排序也被称为递减增量排序（Diminishing Increment Sort） 矩阵的列数取决于步长序列（step sequence） 比如，如果步长序列为 ${1,5,19,41,109,…}$，就代表依次分成109列、41列、19列、5列、1列进行排序 不同的步长序列，执行效率也不同 希尔排序 – 实例希尔本人给出的步长序列是 $𝑛/2^𝑘$，比如 $𝑛$ 为 $16$ 时，步长序列是 {$1, 2, 4, 8$} 分成8列进行排序 分成4列进行排序 分成2列进行排序 分成1列进行排序 不难看出来，从8列变为1列的过程中，逆序对的数量在逐渐减少 因此希尔排序底层一般使用插入排序对每一列进行排序，很多资料认为希尔排序是插入排序的改进版 假设有11个元素，步长序列是{1, 2, 5} 假设元素在第 $col$ 列、第 $row$ 行，步长（总列数）是 $step$ 那么这个元素在数组中的索引是 $col + row * step$ 比如 $9$ 在排序前是第 $2$ 列、第 $0$ 行，那么它排序前的索引是 $2 + 0 * 5 = 2$ 比如 $4$ 在排序前是第 $2$ 列、第 $1$ 行，那么它排序前的索引是 $2 + 1 * 5 = 7$ 希尔排序 – 实现1234567891011121314151617181920protected void sort() &#123; List&lt;Integer&gt; shellSequence = shellStepSequence(); for (Integer shell : shellSequence) &#123; sort(shell); &#125;&#125;// 分成step列进行排序private void sort(int step) &#123; // col : 第几列，column的简称 for (int col = 0; col &lt; step; col++) &#123; // 对第col列进行排序 // col、col+step、col+2*step、col+3*step for (int begin = col + step; begin &lt; array.length; begin += step) &#123; int cur = begin; while (cur &gt; col &amp;&amp; cmp(cur, cur - step) &lt; 0) &#123; swap(cur, cur - step); cur -= step; &#125; &#125; &#125;&#125; 最好情况是步长序列只有 $1$，且序列几乎有序，时间复杂度为 $O(n)$ 空间复杂度为 $O(1)$，属于不稳定排序 希尔排序 – 步长序列希尔本人给出的步长序列，最坏情况时间复杂度是 $O(n^2)$ 12345678private List&lt;Integer&gt; shellStepSequence() &#123; List&lt;Integer&gt; stepSequence = new ArrayList&lt;&gt;(); int step = array.length; while ((step &gt;&gt;= 1) &gt; 0) &#123; stepSequence.add(step); &#125; return stepSequence;&#125; 目前已知的最好的步长序列，最坏情况时间复杂度是 $O(n^{4/3})$ ，1986年由Robert Sedgewick提出 \begin{cases} 9 \left(2^k - 2^{\frac{k}{2}}\right) +1, & \text {k even} \\ 8 \cdot 2^k - 6 \cdot 2^{\frac{(k+1)}{2}} + 1, & \text {k odd} \\ \end{cases} \\ 1,5,19,41,109,...123456789101112131415161718private List&lt;Integer&gt; SedgewickStepSequence() &#123; List&lt;Integer&gt; stepSequence = new LinkedList&lt;&gt;(); int k = 0, step = 0; while (true) &#123; if (k % 2 == 0) &#123; int pow = (int) Math.pow(2, k &gt;&gt; 1); step = 1 + 9 * (pow * pow - pow); &#125; else &#123; int pow1 = (int) Math.pow(2, (k - 1) &gt;&gt; 1); int pow2 = (int) Math.pow(2, (k + 1) &gt;&gt; 1); step = 1 + 8 * pow1 * pow2 - 6 * pow2; &#125; if (step &gt;= array.length) break; stepSequence.add(0, step); k++; &#125; return stepSequence;&#125;]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[快速排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[快速排序（Quick Sort）什么是快速排序1960年由查尔斯·安东尼·理查德·霍尔（Charles Antony Richard Hoare，缩写为C. A. R. Hoare）提出 昵称为东尼·霍尔（Tony Hoare） 快速排序 – 执行流程① 从序列中选择一个轴点元素（pivot） ​ 假设每次选择 0 位置的元素为轴点元素 ② 利用 pivot 将序列分割成 2 个子序列 ​ 将小于 pivot 的元素放在pivot前面（左侧） ​ 将大于 pivot 的元素放在pivot后面（右侧） ​ 等于pivot的元素放哪边都可以 ③ 对子序列进行 ① ② 操作 ​ 直到不能再分割（子序列中只剩下1个元素） 快速排序的本质 逐渐将每一个元素都转换成轴点元素 快速排序 – 轴点构造 快速排序 – 时间复杂度 在轴点左右元素数量比较均匀的情况下，同时也是最好的情况 $T(n) = 2 ∗ T(n/2) + O(n) = O(nlogn)$ 如果轴点左右元素数量极度不均匀，最坏情况 $T(n) = T(n − 1) + O(n) = O(n^2)$ 为了降低最坏情况的出现概率，一般采取的做法是 随机选择轴点元素 最好、平均时间复杂度：$O(nlogn)$ 最坏时间复杂度：$O(n^2)$ 由于递归调用的缘故，空间复杂度：$O(logn)$ 属于不稳定排序 快速排序 – 实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051protected void sort() &#123; sort(0, array.length);&#125;// 对 [begin, end) 范围的元素进行快速排序private void sort(int begin, int end) &#123; if (end - begin &lt; 2) return; // 确定轴点位置 O(n) int mid = pivotIndex(begin, end); // 对子序列进行快速排序 sort(begin, mid); sort(mid + 1, end); &#125; /** * 构造出 [begin, end) 范围的轴点元素 * @return 轴点元素的最终位置 */private int pivotIndex(int begin, int end) &#123; // 随机选择一个元素跟begin位置进行交换 swap(begin, begin + (int)(Math.random() * (end - begin))); // 备份begin位置的元素 T pivot = array[begin]; // end指向最后一个元素 end--; while (begin &lt; end) &#123; while (begin &lt; end) &#123; if (cmp(pivot, array[end]) &lt; 0) &#123; // 右边元素 &gt; 轴点元素 end--; &#125; else &#123; // 右边元素 &lt;= 轴点元素 array[begin++] = array[end]; break; &#125; &#125; while (begin &lt; end) &#123; if (cmp(pivot, array[begin]) &gt; 0) &#123; // 左边元素 &lt; 轴点元素 begin++; &#125; else &#123; // 左边元素 &gt;= 轴点元素 array[end--] = array[begin]; break; &#125; &#125; &#125; // 将轴点元素放入最终的位置 array[begin] = pivot; // 返回轴点元素的位置 return begin;&#125; 快速排序 – 与轴点相等的元素 如果序列中的所有元素都与轴点元素相等，利用目前的算法实现，轴点元素可以将序列分割成 2 个均匀的子序列 思考：cmp 位置的判断分别改为 ≤、≥ 会起到什么效果？ 123456789101112131415161718while (begin &lt; end) &#123; while (begin &lt; end) &#123; if (cmp(pivot, array[end]) &lt;= 0) &#123; // 右边元素 &gt; 轴点元素 end--; &#125; else &#123; // 右边元素 &lt;= 轴点元素 array[begin++] = array[end]; break; &#125; &#125; while (begin &lt; end) &#123; if (cmp(pivot, array[begin]) &gt;= 0) &#123; // 左边元素 &lt; 轴点元素 begin++; &#125; else &#123; // 左边元素 &gt;= 轴点元素 array[end--] = array[begin]; break; &#125; &#125;&#125; 轴点元素分割出来的子序列极度不均匀 导致出现最坏时间复杂度 $O(n^2)$]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[归并排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[归并排序（Merge Sort）什么是归并排序1945年由约翰·冯·诺伊曼（John von Neumann）首次提出 执行流程 ① 不断地将当前序列平均分割成2个子序列 ​ 直到不能再分割（序列中只剩1个元素） ② 不断地将2个子序列合并成一个有序序列 ​ 直到最终只剩下1个有序序列 归并排序 – divide实现12345protected void sort() &#123; // 准备一段临时的数组空间，在merge操作中使用 leftArray = (T[]) new Comparable[array.length &gt;&gt; 1]; sort(0, array.length);&#125; 12345678private void sort(int begin, int end) &#123; if (end - begin &lt; 2) return; int mid = (begin + end) &gt;&gt; 1; sort(begin, mid); sort(mid, end); merge(begin, mid, end);&#125; 归并排序 – merge归并排序 – merge细节 需要 merge 的 2 组序列存在于同一个数组中，并且是挨在一起的 为了更好地完成 merge 操作，最好将其中 1 组序列备份出来，比如 $[begin, mid)$ $li == 0，le == mid – begin$ $ri == mid，re == end$ 归并排序 – merge – 左边先结束 归并排序 – merge – 右边先结束 归并排序 – merge实现1234567891011121314151617181920// 将 [begin, mid) 和 [mid, end) 范围的序列合并成一个有序序列private void merge(int begin, int mid, int end) &#123; int li = 0, le = mid - begin; int ri = mid, re = end; int ai = begin; // 备份左边数组 for (int i = li; i &lt; le; i++) &#123; leftArray[i] = array[begin + i]; &#125; // 如果左边还没有结束 while (li &lt; le) &#123; if (ri &lt; re &amp;&amp; cmp(array[ri], leftArray[li]) &lt; 0) &#123; array[ai++] = array[ri++]; &#125; else &#123; array[ai++] = leftArray[li++]; &#125; &#125;&#125; 归并排序 – 复杂度分析归并排序花费的时间 $T(n) = 2 ∗ T (n/2) + O(n)$ $T(1) = O(1)$ $T(n) /n = T(n/2) / (n/2) + O(1)$ 令 $S(n) = T(n) /n$ $S(1) = O(1)$ $S(n) = S(n/2) + O(1) = S(n/4)+ O(2) = S(n/8) + O(3) = S(n/2^k) + O(k) = S(1) + O(logn) = O(logn)$ $T(n) = n ∗ S(n) = O(nlogn)$ 由于归并排序总是平均分割子序列，所以最好、最坏、平均时间复杂度都是 $O(nlogn)$ ，属于稳定排序 从代码中不难看出：归并排序的空间复杂度是 $O(n/2 + logn) = O(n)$ $n/2$ 用于临时存放左侧数组，$logn$ 是因为递归调用 常见的递推式与复杂度 递推式 复杂度 $T(n) = T(n/2) + O(1)$ $O(logn)$ $T(n) = T(n − 1) + O(1)$ $O(n)$ $T(n) = T(n/2) + O(n)$ $O(n)$ $T(n) = 2 ∗ T(n/2) + O(1) $ $O(n)$ $T(n) = 2 ∗ T(n/2) + O(n)$ $O(nlogn)$ $T(n) = T(n − 1) + O(n)$ $O(n^2)$ $T(n) = 2 ∗ T(n − 1) + O(1)$ $O(2^n)$ $T(n) = 2 ∗ T(n − 1) + O(n)$ $O(2^n)$]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[插入排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[插入排序（Insertion Sort）什么是插入排序插入排序非常类似于扑克牌的排序 执行流程 ① 在执行过程中，插入排序会将序列分为2部分 ​ 头部是已经排好序的，尾部是待排序的 ② 从头开始扫描每一个元素 ​ 每当扫描到一个元素，就将它插入到头部合适的位置，使得头部数据依然保持有序 插入排序 - 实现(无优化)1234567for (int begin = 1; begin &lt; array.length; begin++) &#123; int cur = begin; while (cur &gt; 0 &amp;&amp; cmp(cur, cur - 1) &lt; 0) &#123; swap(cur, cur - 1); cur--; &#125;&#125; 插入排序 – 逆序对（Inversion） 什么是逆序对？ 数组 的逆序对为： ，共5个逆序对 插入排序的时间复杂度与逆序对的数量成正比关系 逆序对的数量越多，插入排序的时间复杂度越高 最坏、平均时间复杂度：$O(n^2)$ 最好时间复杂度：$O(n)$ 空间复杂度：$O(1)$ 属于稳定排序 当逆序对的数量极少时，插入排序的效率特别高 甚至速度比 $O(nlogn)$级别的快速排序还要快 数据量不是特别大的时候，插入排序的效率也是非常好的 插入排序 – 优化思路是将【交换】转为【挪动】 ① 先将待插入的元素备份 ② 头部有序数据中比待插入元素大的，都朝尾部方向挪动1个位置 ③ 将待插入元素放到最终的合适位置 123456789for (int begin = 1; begin &lt; array.length; begin++) &#123; int cur = begin; T v = array[cur]; while (cur &gt; 0 &amp;&amp; cmp(v, array[cur - 1]) &lt; 0) &#123; array[cur] = array[cur - 1]; cur--; &#125; array[cur] = v;&#125; 插入排序 – 二分搜索优化二分搜索（Binary Search）如何确定一个元素在数组中的位置？（假设数组里面全都是整数） 如果是无序数组，从第 0 个位置开始遍历搜索，平均时间复杂度：$O(n)$ 0 1 2 3 4 5 6 7 8 9 31 66 17 15 28 20 59 88 45 56 如果是有序数组，可以使用二分搜索，最坏时间复杂度：$O(logn)$ 0 1 2 3 4 5 6 7 8 9 15 17 20 28 31 45 56 59 66 88 二分搜索 – 思路假设在 $[begin, end)$ 范围内搜索某个元素 v，$mid == (begin + end) /2$ 如果 $v &lt; m$，去 $[begin, mid)$ 范围内二分搜索 如果 $v &gt; m$，去 $[mid + 1, end)$ 范围内二分搜索 如果 $v == m$，直接返回 mid 二分搜索 – 实例 二分搜索 – 实现1234567891011121314public static int search(int[] array, int v) &#123; if (array == null || array.length == 0) return -1; int begin = 0; int end = array.length; while (begin &lt; end) &#123; int mid = (begin + end) &gt;&gt; 1; if (v &lt; array[mid]) &#123; end = mid; &#125; else &#123; begin = mid + 1; &#125; &#125; return begin;&#125; 插入排序 – 二分搜索优化在元素 v 的插入过程中，可以先二分搜索出合适的插入位置，然后再将元素 v 插入 要求二分搜索返回的插入位置：第1个大于 v 的元素位置 如果 v 是 5，返回 2 如果 v 是 1，返回 0 如果 v 是 15，返回 7 如果 v 是 8，返回 5 插入排序 – 二分搜索优化 – 思路假设在 $[begin, end)$ 范围内搜索某个元素 $v$，$mid == (begin + end) /2$ 如果 $v &lt; m$，去 $[begin, mid)$ 范围内二分搜索 如果 $v ≥ m$，去 $[mid + 1, end)$ 范围内二分搜索 插入排序 – 二分搜索优化 – 实例 插入排序 – 二分搜索优化 – 实现12345678910111213141516171819202122232425262728for (int begin = 1; begin &lt; array.length; begin++) &#123; insert(begin, search(begin));&#125;// 将source位置的元素插入到dest位置private void insert(int source, int dest) &#123; T v = array[source]; for (int i = source; i &gt; dest; i--) &#123; array[i] = array[i - 1]; &#125; array[dest] = v;&#125;// 利用二分搜索找到 index 位置元素的待插入位置// 已经排好序数组的区间范围是 [0, index)private int search(int index) &#123; int begin = 0; int end = index; while (begin &lt; end) &#123; int mid = (begin + end) &gt;&gt; 1; if (cmp(array[index], array[mid]) &lt; 0) &#123; end = mid; &#125; else &#123; begin = mid + 1; &#125; &#125; return begin;&#125; 需要注意的是，使用了二分搜索后，只是减少了比较次数，但插入排序的平均时间复杂度依然是 $O(n^2)$]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[堆排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E5%A0%86%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[堆排序（Heap Sort）什么是堆排序堆排序可以认为是对选择排序的一种优化 选择排序的实现 / 二叉堆的实现 执行流程 ① 对序列进行原地建堆（heapify） ② 重复执行以下操作，直到堆的元素数量为 1 ​ 交换堆顶元素与尾元素 ​ 堆的元素数量减 1 ​ 对 0 位置进行 1 次 siftDown 操作 堆排序 - 实现12345678910111213// 原地建堆heapSize = array.length;for (int i = (heapSize &gt;&gt; 1) - 1; i &gt;= 0; i--) &#123; siftDown(i);&#125;while (heapSize &gt; 1) &#123; // 交换堆顶元素和尾部元素 swap(0, --heapSize); // 对0位置进行siftDown（恢复堆的性质） siftDown(0);&#125; 123456789101112131415161718192021222324private void siftDown(int index) &#123; T element = array[index]; int half = heapSize &gt;&gt; 1; while (index &lt; half) &#123; // index必须是非叶子节点 // 默认是左边跟父节点比 int childIndex = (index &lt;&lt; 1) + 1; T child = array[childIndex]; int rightIndex = childIndex + 1; // 右子节点比左子节点大 if (rightIndex &lt; heapSize &amp;&amp; cmp(array[rightIndex], child) &gt; 0) &#123; child = array[childIndex = rightIndex]; &#125; // 大于等于子节点 if (cmp(element, child) &gt;= 0) break; array[index] = child; index = childIndex; &#125; array[index] = element;&#125; 最好、最坏、平均时间复杂度：O(nlogn)，空间复杂度：O(1)，属于不稳定排序]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[选择排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[选择排序（Selection Sort）执行流程 ① 从序列中找出最大的那个元素，然后与最末尾的元素交换位置 ​ 执行完一轮后，最末尾的那个元素就是最大的元素 ② 忽略 ① 中曾经找到的最大元素，重复执行步骤 ① 123456789for (int end = array.length - 1; end &gt; 0; end--) &#123; int max = 0; for (int begin = 1; begin &lt;= end; begin++) &#123; if (cmp(max, begin) &lt; 0) &#123; max = begin; &#125; &#125; swap(max, end);&#125; 选择排序的交换次数要远远少于冒泡排序，平均性能优于冒泡排序 最好、最坏、平均时间复杂度：$O(n^2)$，空间复杂度：$O(1)$，属于不稳定排序]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[冒泡排序]]></title>
+    <url>%2F2020%2F07%2F14%2F%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[冒泡排序（Bubble Sort）冒泡排序（无优化实现）冒泡排序也叫做起泡排序 执行流程（统一以升序为例子） ① 从头开始比较每一对相邻元素，如果第1个比第2个大，就交换它们的位置 ​ 执行完一轮后，最末尾那个元素就是最大的元素 ② 忽略 ① 中曾经找到的最大元素，重复执行步骤 ①，直到全部元素有序 123456789for (int end = array.length - 1; end &gt; 0; end--) &#123; for (int begin = 1; begin &lt;= end; begin++) &#123; // 比大小 if (cmp(begin, begin - 1) &lt; 0) &#123; // 交换 swap(begin, begin - 1); &#125; &#125;&#125; 冒泡排序 – 优化①如果序列已经完全有序，可以提前终止冒泡排序 12345678910for (int end = array.length - 1; end &gt; 0; end--) &#123; boolean sorted = true; for (int begin = 1; begin &lt;= end; begin++) &#123; if (cmp(begin, begin - 1) &lt; 0) &#123; swap(begin, begin - 1); sorted = false; &#125; &#125; if (sorted) break;&#125; 冒泡排序 – 优化②如果序列尾部已经局部有序，可以记录最后1次交换的位置，减少比较次数 最后1次交换的位置是 6 1234567891011for (int end = array.length - 1; end &gt; 0; end--) &#123; int sortedIndex = 1; for (int begin = 1; begin &lt;= end; begin++) &#123; // if (array[begin] &lt; array[begin - 1]) &#123; if (cmp(begin, begin - 1) &lt; 0) &#123; swap(begin, begin - 1); sortedIndex = begin; &#125; &#125; end = sortedIndex;&#125; 最坏、平均时间复杂度：$O(n^2)$ 最好时间复杂度：$O(n)$ 空间复杂度：$O(1)$]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[10大排序算法]]></title>
+    <url>%2F2020%2F07%2F14%2F10%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[10大排序算法以下表格是基于数组进行排序的一般性结论 冒泡、选择、插入、归并、快速、希尔、堆排序，属于比较排序（Comparison Sorting） 排序算法的稳定性（Stability）如果相等的2个元素，在排序前后的相对位置保持不变，那么这是稳定的排序算法 排序前：5, 1, 3𝑎, 4, 7, 3𝑏 稳定的排序： 1, 3𝑎, 3𝑏, 4, 5, 7 不稳定的排序：1, 3𝑏, 3𝑎, 4, 5, 7 原地算法（In-place Algorithm）不依赖额外的资源或者依赖少数的额外资源，仅依靠输出来覆盖输入 空间复杂度为𝑂(1) 的都可以认为是原地算法 非原地算法，称为 Not-in-place 或者 Out-of-place]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Trie]]></title>
     <url>%2F2020%2F07%2F14%2FTrie%2F</url>
     <content type="text"><![CDATA[TrieTrie 也叫做字典树、前缀树（Prefix Tree）、单词查找树 Trie 搜索字符串的效率主要跟字符串的长度有关 假设使用 Trie 存储 cat、dog、doggy、does、cast、add 六个单词 Trie代码实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124public class Trie&lt;V&gt; &#123; private int size; private Node&lt;V&gt; root; public int size() &#123; return size; &#125; public boolean isEmpty() &#123; return size == 0; &#125; public void clear() &#123; size = 0; root = null; &#125; public V get(String key) &#123; Node&lt;V&gt; node = node(key); return node != null &amp;&amp; node.word ? node.value : null; &#125; public boolean contains(String key) &#123; Node&lt;V&gt; node = node(key); return node != null &amp;&amp; node.word; &#125; public V add(String key, V value) &#123; keyCheck(key); // 创建根节点 if (root == null) &#123; root = new Node&lt;&gt;(null); &#125; Node&lt;V&gt; node = root; int len = key.length(); for (int i = 0; i &lt; len; i++) &#123; char c = key.charAt(i); boolean emptyChildren = node.children == null; Node&lt;V&gt; childNode = emptyChildren ? null : node.children.get(c); if (childNode == null) &#123; childNode = new Node&lt;&gt;(node); childNode.character = c; node.children = emptyChildren ? new HashMap&lt;&gt;() : node.children; node.children.put(c, childNode); &#125; node = childNode; &#125; if (node.word) &#123; // 已经存在这个单词 V oldValue = node.value; node.value = value; return oldValue; &#125; // 新增一个单词 node.word = true; node.value = value; size++; return null; &#125; public V remove(String key) &#123; // 找到最后一个节点 Node&lt;V&gt; node = node(key); // 如果不是单词结尾，不用作任何处理 if (node == null || !node.word) return null; size--; V oldValue = node.value; // 如果还有子节点 if (node.children != null &amp;&amp; !node.children.isEmpty()) &#123; node.word = false; node.value = null; return oldValue; &#125; // 如果没有子节点 Node&lt;V&gt; parent = null; while ((parent = node.parent) != null) &#123; parent.children.remove(node.character); if (parent.word || !parent.children.isEmpty()) break; node = parent; &#125; return oldValue; &#125; public boolean startsWith(String prefix) &#123; return node(prefix) != null; &#125; private Node&lt;V&gt; node(String key) &#123; keyCheck(key); Node&lt;V&gt; node = root; int len = key.length(); for (int i = 0; i &lt; len; i++) &#123; if (node == null || node.children == null || node.children.isEmpty()) return null; char c = key.charAt(i); node = node.children.get(c); &#125; return node; &#125; private void keyCheck(String key) &#123; if (key == null || key.length() == 0) &#123; throw new IllegalArgumentException("key must not be empty"); &#125; &#125; private static class Node&lt;V&gt; &#123; Node&lt;V&gt; parent; HashMap&lt;Character, Node&lt;V&gt;&gt; children; Character character; V value; boolean word; // 是否为单词的结尾（是否为一个完整的单词） public Node(Node&lt;V&gt; parent) &#123; this.parent = parent; &#125; &#125;&#125; 总结Trie 的优点：搜索前缀的效率主要跟前缀的长度有关 Trie 的缺点：需要耗费大量的内存，因此还有待改进 更多Trie 相关的数据结构和算法 Double-array Trie、Suffix Tree、Patricia Tree、Crit-bit Tree、AC自动机]]></content>
