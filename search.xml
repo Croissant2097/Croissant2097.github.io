@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[休眠排序]]></title>
+    <url>%2F2020%2F07%2F15%2F%E4%BC%91%E7%9C%A0%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[史上“最强”排序 – 休眠排序1234567891011121314151617181920public class SleepSort extends Thread&#123; private int value; public SleepSort(int value)&#123; this.value = value; &#125; public void run()&#123; try &#123; Thread.sleep(value); System.out.println(value); &#125;catch (InterruptedException e)&#123; e.printStackTrace(); &#125; &#125; public static void main(String[] args)&#123; int[] array = &#123;10,100,50,30,60,2&#125;; for (int item : array) &#123; new SleepSort(item).start(); &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[桶排序]]></title>
+    <url>%2F2020%2F07%2F15%2F%E6%A1%B6%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[桶排序（Bucket Sort）什么是桶排序执行流程 ① 创建一定数量的桶（比如用数组、链表作为桶） ② 按照一定的规则（不同类型的数据，规则不同），将序列中的元素均匀分配到对应的桶 ③ 分别对每个桶进行单独排序 ④ 将所有非空桶的元素合并成有序序列 元素在桶中的索引 元素值 * 元素数量 桶排序 – 实现12345678910111213141516171819202122double[] array = &#123;0.34,0.47,0.29,0.84,0.45,0.38,0.35,0.76&#125;;// 桶排序List&lt;Double&gt;[] buckets = new List[array.length];for (double v : array) &#123; int bucketIndex = (int) (v * array.length); List&lt;Double&gt; bucket = buckets[bucketIndex]; if (bucket == null) &#123; bucket = new LinkedList&lt;&gt;(); buckets[bucketIndex] = bucket; &#125; bucket.add(v);&#125;// 对每个桶进行排序int index = 0;for (List&lt;Double&gt; bucket : buckets) &#123; if (bucket == null) continue; bucket.sort(null); for (Double d : bucket) &#123; array[index++] = d; &#125;&#125; 空间复杂度：$O(n + m)$，$m$ 是桶的数量 时间复杂度：$O(n) + m ∗ O( \frac{n} {m} ∗ log\frac{n}{m}) = O(n + n ∗ log\frac{n}{m}) = O(n + n ∗ logn − n ∗ logm)$ 因 此 为 $O(n + k)$ ，$k$ 为 $n ∗ logn − n ∗ logm$ 属于稳定排序]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[基数排序]]></title>
+    <url>%2F2020%2F07%2F15%2F%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[基数排序（Radix Sort）什么是基数排序基数排序非常适合用于整数排序（尤其是非负整数），因此本课程只演示对非负整数进行基数排序 执行流程：依次对个位数、十位数、百位数、千位数、万位数…进行排序（从低位到高位） 个位数、十位数、百位数的取值范围都是固定的 $0$ ~ $9$，可以使用计数排序对它们进行排序 如果先对高位排序，再对低位排序，是不可行的 基数排序 – 实现123456789101112131415161718protected void sort() &#123; // 找出最大值 int max = array[0]; for (int i = 1; i &lt; array.length; i++) &#123; if (array[i] &gt; max) &#123; max = array[i]; &#125; &#125; // 个位数: array[i] / 1 % 10 = 3 // 十位数：array[i] / 10 % 10 = 9 // 百位数：array[i] / 100 % 10 = 5 // 千位数：array[i] / 1000 % 10 = ... for (int divider = 1; divider &lt;= max; divider *= 10) &#123; countingSort(divider); &#125;&#125; 1234567891011121314151617181920212223protected void countingSort(int divider) &#123; // 开辟内存空间，存储次数 int[] counts = new int[10]; // 统计每个整数出现的次数 for (Integer integer : array) &#123; counts[integer / divider % 10]++; &#125; // 累加次数 for (int i = 1; i &lt; counts.length; i++) &#123; counts[i] += counts[i - 1]; &#125; // 从后往前遍历元素，将它放到有序数组中的合适位置 int[] newArray = new int[array.length]; for (int i = array.length - 1; i &gt;= 0; i--) &#123; newArray[--counts[array[i] / divider % 10]] = array[i]; &#125; // 将有序数组赋值到array for (int i = 0; i &lt; newArray.length; i++) &#123; array[i] = newArray[i]; &#125;&#125; 最好、最坏、平均时间复杂度：$O(d ∗ (n + k))$ ，$d$ 是最大值的位数，$k$ 是进制。属于稳定排序 空间复杂度：$O(n + k)$，$k$ 是进制]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[计数排序]]></title>
+    <url>%2F2020%2F07%2F15%2F%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[计数排序（Counting Sort）冒泡、选择、插入、归并、快速、希尔、堆排序，都是基于比较的排序 平均时间复杂度目前最低是 $O(nlogn)$ 计数排序、桶排序、基数排序，都不是基于比较的排序 它们是典型的用空间换时间，在某些时候，平均时间复杂度可以比 $O(nlogn)$ 更低 什么是计数排序计数排序于1954年由Harold H. Seward提出，适合对一定范围内的整数进行排序 计数排序的核心思想： 统计每个整数在序列中出现的次数，进而推导出每个整数在有序序列中的索引 计数排序 – 最简单的实现 123456789101112131415161718192021222324protected void sort() &#123; // 找出最大值 int max = array[0]; for (int i = 1; i &lt; array.length; i++) &#123; if (array[i] &gt; max) &#123; max = array[i]; &#125; &#125; // O(n) // 开辟内存空间，存储每个整数出现的次数 int[] counts = new int[1 + max]; // 统计每个整数出现的次数 for (Integer integer : array) &#123; counts[integer]++; &#125; // O(n) // 根据整数的出现次数，对整数进行排序 int index = 0; for (int i = 0; i &lt; counts.length; i++) &#123; while (counts[i]-- &gt; 0) &#123; array[index++] = i; &#125; &#125; // O(n)&#125; 这个版本的实现存在以下问题 无法对负整数进行排序 极其浪费内存空间 是个不稳定的排序 计数排序 – 改进思路假设 $array$ 中的最小值是 $min$ $array$ 中的元素 $k$ 对应的 $counts$ 索引是 $k – min$ $array$ 中的元素 $k$ 在有序序列中的索引 $counts[k – min] – p$ $p$ 代表着是倒数第几个 $k$ 计数排序 – 改进实现1234567891011121314151617181920212223242526272829303132333435protected void sort() &#123; // 找出最值 int max = array[0]; int min = array[0]; for (int i = 1; i &lt; array.length; i++) &#123; if (array[i] &gt; max) &#123; max = array[i]; &#125; if (array[i] &lt; min) &#123; min = array[i]; &#125; &#125; // 开辟内存空间，存储次数 int[] counts = new int[max - min + 1]; // 统计每个整数出现的次数 for (Integer integer : array) &#123; counts[integer - min]++; &#125; // 累加次数 for (int i = 1; i &lt; counts.length; i++) &#123; counts[i] += counts[i - 1]; &#125; // 从后往前遍历元素，将它放到有序数组中的合适位置 int[] newArray = new int[array.length]; for (int i = array.length - 1; i &gt;= 0; i--) &#123; newArray[--counts[array[i] - min]] = array[i]; &#125; // 将有序数组赋值到array for (int i = 0; i &lt; newArray.length; i++) &#123; array[i] = newArray[i]; &#125;&#125; 最好、最坏、平均时间复杂度：$O(n + k)$ 空间复杂度：$O(n + k)$ $k$ 是整数的取值范围 属于稳定排序 计数排序 – 对自定义对象进行排序如果自定义对象可以提供用以排序的整数类型，依然可以使用计数排序 12345678910111213private static class Person &#123; int age; String name; Person(int age, String name) &#123; this.age = age; this.name = name; &#125; @Override public String toString() &#123; return "Person [age=" + age + ", name=" + name + "]"; &#125;&#125; 12345678Person[] persons = new Person[] &#123; new Person(20, "A"), new Person(-13, "B"), new Person(17, "C"), new Person(12, "D"), new Person(-13, "E"), new Person(20, "F")&#125;; 1234567891011// 找出最值int max = persons[0].age;int min = persons[0].age;for (int i = 1; i &lt; persons.length; i++) &#123; if (persons[i].age &gt; max) &#123; max = persons[i].age; &#125; if (persons[i].age &lt; min) &#123; min = persons[i].age; &#125;&#125; 1234567891011121314151617181920212223// 开辟内存空间，存储次数int[] counts = new int[max - min + 1];// 统计每个整数出现的次数for (Person person : persons) &#123; counts[person.age - min]++;&#125;// 累加次数for (int i = 1; i &lt; counts.length; i++) &#123; counts[i] += counts[i - 1];&#125;// 从后往前遍历元素，将它放到有序数组中的合适位置Person[] newArray = new Person[persons.length];for (int i = persons.length - 1; i &gt;= 0; i--) &#123; newArray[--counts[persons[i].age - min]] = persons[i];&#125;// 将有序数组赋值到arraySystem.arraycopy(newArray, 0, persons, 0, newArray.length);for (Person person : persons) &#123; System.out.println(person);&#125; 排序之后的结果 ① $Person [age=-13, name=B]$ ② $Person [age=-13, name=E]$ ③ $Person [age=12, name=D]$ ④ $Person [age=17, name=C]$ ⑤ $Person [age=20, name=A]$ ⑥ $Person [age=20, name=F]$]]></content>
+      <categories>
+        <category>算法</category>
+        <category>排序</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>排序</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[希尔排序]]></title>
     <url>%2F2020%2F07%2F14%2F%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[希尔排序（Shell Sort）什么是希尔排序 1959年由唐纳德·希尔（Donald Shell）提出 希尔排序把序列看作是一个矩阵，分成 𝑚 列，逐列进行排序 𝑚 从某个整数逐渐减为1 当 𝑚 为1时，整个序列将完全有序 因此，希尔排序也被称为递减增量排序（Diminishing Increment Sort） 矩阵的列数取决于步长序列（step sequence） 比如，如果步长序列为 ${1,5,19,41,109,…}$，就代表依次分成109列、41列、19列、5列、1列进行排序 不同的步长序列，执行效率也不同 希尔排序 – 实例希尔本人给出的步长序列是 $𝑛/2^𝑘$，比如 $𝑛$ 为 $16$ 时，步长序列是 {$1, 2, 4, 8$} 分成8列进行排序 分成4列进行排序 分成2列进行排序 分成1列进行排序 不难看出来，从8列变为1列的过程中，逆序对的数量在逐渐减少 因此希尔排序底层一般使用插入排序对每一列进行排序，很多资料认为希尔排序是插入排序的改进版 假设有11个元素，步长序列是{1, 2, 5} 假设元素在第 $col$ 列、第 $row$ 行，步长（总列数）是 $step$ 那么这个元素在数组中的索引是 $col + row * step$ 比如 $9$ 在排序前是第 $2$ 列、第 $0$ 行，那么它排序前的索引是 $2 + 0 * 5 = 2$ 比如 $4$ 在排序前是第 $2$ 列、第 $1$ 行，那么它排序前的索引是 $2 + 1 * 5 = 7$ 希尔排序 – 实现1234567891011121314151617181920protected void sort() &#123; List&lt;Integer&gt; shellSequence = shellStepSequence(); for (Integer shell : shellSequence) &#123; sort(shell); &#125;&#125;// 分成step列进行排序private void sort(int step) &#123; // col : 第几列，column的简称 for (int col = 0; col &lt; step; col++) &#123; // 对第col列进行排序 // col、col+step、col+2*step、col+3*step for (int begin = col + step; begin &lt; array.length; begin += step) &#123; int cur = begin; while (cur &gt; col &amp;&amp; cmp(cur, cur - step) &lt; 0) &#123; swap(cur, cur - step); cur -= step; &#125; &#125; &#125;&#125; 最好情况是步长序列只有 $1$，且序列几乎有序，时间复杂度为 $O(n)$ 空间复杂度为 $O(1)$，属于不稳定排序 希尔排序 – 步长序列希尔本人给出的步长序列，最坏情况时间复杂度是 $O(n^2)$ 12345678private List&lt;Integer&gt; shellStepSequence() &#123; List&lt;Integer&gt; stepSequence = new ArrayList&lt;&gt;(); int step = array.length; while ((step &gt;&gt;= 1) &gt; 0) &#123; stepSequence.add(step); &#125; return stepSequence;&#125; 目前已知的最好的步长序列，最坏情况时间复杂度是 $O(n^{4/3})$ ，1986年由Robert Sedgewick提出 \begin{cases} 9 \left(2^k - 2^{\frac{k}{2}}\right) +1, & \text {k even} \\ 8 \cdot 2^k - 6 \cdot 2^{\frac{(k+1)}{2}} + 1, & \text {k odd} \\ \end{cases} \\ 1,5,19,41,109,...123456789101112131415161718private List&lt;Integer&gt; SedgewickStepSequence() &#123; List&lt;Integer&gt; stepSequence = new LinkedList&lt;&gt;(); int k = 0, step = 0; while (true) &#123; if (k % 2 == 0) &#123; int pow = (int) Math.pow(2, k &gt;&gt; 1); step = 1 + 9 * (pow * pow - pow); &#125; else &#123; int pow1 = (int) Math.pow(2, (k - 1) &gt;&gt; 1); int pow2 = (int) Math.pow(2, (k + 1) &gt;&gt; 1); step = 1 + 8 * pow1 * pow2 - 6 * pow2; &#125; if (step &gt;= array.length) break; stepSequence.add(0, step); k++; &#125; return stepSequence;&#125;]]></content>
