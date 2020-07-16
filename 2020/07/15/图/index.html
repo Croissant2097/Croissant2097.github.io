@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="图（Graph）什么是图图由顶点$（vertex）$和边$（edge）$组成，通常表示为 $G = (V, E)$ $G$ 表示一个图，$V$ 是顶点集，$E$ 是边集 顶点集 $V$ 有穷且非空 任意两个顶点之间都可以用边来表示它们之间的关系，边集 $E$ 可以是空的 有向图（Directed Graph）有向图的边是有明确方向的  有向无环图（Directed Acyclic Graph，简称">
+<meta name="keywords" content="算法,图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图">
+<meta property="og:url" content="http://yoursite.com/2020/07/15/图/index.html">
+<meta property="og:site_name" content="Croissant2097">
+<meta property="og:description" content="图（Graph）什么是图图由顶点$（vertex）$和边$（edge）$组成，通常表示为 $G = (V, E)$ $G$ 表示一个图，$V$ 是顶点集，$E$ 是边集 顶点集 $V$ 有穷且非空 任意两个顶点之间都可以用边来表示它们之间的关系，边集 $E$ 可以是空的 有向图（Directed Graph）有向图的边是有明确方向的  有向无环图（Directed Acyclic Graph，简称">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/8.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/9.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/11.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/12.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/13.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/14.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/15.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/16.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/17.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/18.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/19.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/20.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/21.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/图/22.png">
+<meta property="og:updated_time" content="2020-07-16T04:10:28.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图">
+<meta name="twitter:description" content="图（Graph）什么是图图由顶点$（vertex）$和边$（edge）$组成，通常表示为 $G = (V, E)$ $G$ 表示一个图，$V$ 是顶点集，$E$ 是边集 顶点集 $V$ 有穷且非空 任意两个顶点之间都可以用边来表示它们之间的关系，边集 $E$ 可以是空的 有向图（Directed Graph）有向图的边是有明确方向的  有向无环图（Directed Acyclic Graph，简称">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/15/图/1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Croissant2097" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/15/图/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>图 | Croissant2097</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Croissant2097</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Record & Share & Learn</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+  
+
+  
+
+  <a href="https://github.com/Croissant2097" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" style="fill: #222; color: #fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/15/图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content="博客，学习记录">
+      <meta itemprop="image" content="/images/face.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Croissant2097">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-07-15 15:52:11" itemprop="dateCreated datePublished" datetime="2020-07-15T15:52:11+08:00">2020-07-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-16 12:10:28" itemprop="dateModified" datetime="2020-07-16T12:10:28+08:00">2020-07-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/图/" itemprop="url" rel="index"><span itemprop="name">图</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.5k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">5 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="图（Graph）"><a href="#图（Graph）" class="headerlink" title="图（Graph）"></a>图（Graph）</h1><h2 id="什么是图"><a href="#什么是图" class="headerlink" title="什么是图"></a>什么是图</h2><p>图由顶点$（vertex）$和边$（edge）$组成，通常表示为 $G = (V, E)$</p>
+<p>$G$ 表示一个图，$V$ 是顶点集，$E$ 是边集</p>
+<p>顶点集 $V$ 有穷且非空</p>
+<p>任意两个顶点之间都可以用边来表示它们之间的关系，边集 $E$ 可以是空的</p>
+<h2 id="有向图（Directed-Graph）"><a href="#有向图（Directed-Graph）" class="headerlink" title="有向图（Directed Graph）"></a>有向图（Directed Graph）</h2><p>有向图的边是有明确方向的</p>
+<p><img src="/2020/07/15/图/1.png" alt></p>
+<p>有向无环图（Directed Acyclic Graph，简称 DAG）</p>
+<p>如果一个有向图，从任意顶点出发无法经过若干条边回到该顶点，那么它就是一个有向无环图</p>
+<p><img src="/2020/07/15/图/2.png" alt></p>
+<h3 id="出度、入度"><a href="#出度、入度" class="headerlink" title="出度、入度"></a>出度、入度</h3><p>出度、入度适用于有向图</p>
+<p><strong>出度$（Out-degree）$</strong></p>
+<p>一个顶点的出度为 $x$，是指有 $x$ 条边以该顶点为起点</p>
+<p>顶点 $11$ 的出度是 $3$</p>
+<p><strong>入度$（In-degree）$</strong></p>
+<p>一个顶点的入度为 $x$，是指有 $x$ 条边以该顶点为终点</p>
+<p>顶点 $11$ 的入度是 $2$</p>
+<p><img src="/2020/07/15/图/3.png" alt></p>
+<h2 id="无向图（Undirected-Graph）"><a href="#无向图（Undirected-Graph）" class="headerlink" title="无向图（Undirected Graph）"></a>无向图（Undirected Graph）</h2><p>无向图的边是无方向的，效果类似于下面的有向图</p>
+<p><img src="/2020/07/15/图/4.png" alt></p>
+<h2 id="混合图（Mixed-Graph）"><a href="#混合图（Mixed-Graph）" class="headerlink" title="混合图（Mixed Graph）"></a>混合图（Mixed Graph）</h2><p>混合图的边可能是无向的，也可能是有向的</p>
+<p><img src="/2020/07/15/图/5.png" alt></p>
+<h2 id="简单图、多重图"><a href="#简单图、多重图" class="headerlink" title="简单图、多重图"></a>简单图、多重图</h2><p><strong>平行边</strong></p>
+<p>在无向图中，关联一对顶点的无向边如果多于 $1$ 条，则称这些边为平行边</p>
+<p>在有向图中，关联一对顶点的有向边如果多于 $1$ 条，并且它们的的方向相同，则称这些边为平行边</p>
+<p><strong>多重图（Multigraph）</strong></p>
+<p>有平行边或者有自环的图</p>
+<p><strong>简单图（Simple Graph）</strong></p>
+<p>既没有平行边也不没有自环的图</p>
+<p><img src="/2020/07/15/图/6.png" alt></p>
+<h2 id="无向完全图（Undirected-Complete-Graph）"><a href="#无向完全图（Undirected-Complete-Graph）" class="headerlink" title="无向完全图（Undirected Complete Graph）"></a>无向完全图（Undirected Complete Graph）</h2><p>无向完全图的任意两个顶点之间都存在边</p>
+<p>$n$ 个顶点的无向完全图有 $n(n − 1)/2$ 条边</p>
+<p>$n − 1 + n − 2 + n − 3 + ⋯ + 3 + 2 + 1$</p>
+<p><img src="/2020/07/15/图/7.png" alt></p>
+<h2 id="有向完全图（Directed-Complete-Graph）"><a href="#有向完全图（Directed-Complete-Graph）" class="headerlink" title="有向完全图（Directed Complete Graph）"></a>有向完全图（Directed Complete Graph）</h2><p>有向完全图的任意两个顶点之间都存在方向相反的两条边</p>
+<p>$n$ 个顶点的有向完全图有 $n(n − 1)$ 条边</p>
+<p><img src="/2020/07/15/图/8.png" alt></p>
+<p>稠密图（Dense Graph）：边数接近于或等于完全图</p>
+<p>稀疏图（Sparse Graph）：边数远远少于完全图</p>
+<h2 id="有权图（Weighted-Graph）"><a href="#有权图（Weighted-Graph）" class="headerlink" title="有权图（Weighted Graph）"></a>有权图（Weighted Graph）</h2><p>有权图的边可以拥有权值$（Weight）$</p>
+<p><img src="/2020/07/15/图/9.png" alt></p>
+<h2 id="连通图（Connected-Graph）"><a href="#连通图（Connected-Graph）" class="headerlink" title="连通图（Connected Graph）"></a>连通图（Connected Graph）</h2><p>如果顶点 $x$ 和 $y$ 之间存在可相互抵达的路径（直接或间接的路径），则称 $x$ 和 $y$ 是连通的</p>
+<p>如果无向图 $G$ 中任意 $2$ 个顶点都是连通的，则称 $G$ 为连通图</p>
+<h3 id="连通分量（Connected-Component）"><a href="#连通分量（Connected-Component）" class="headerlink" title="连通分量（Connected Component）"></a>连通分量（Connected Component）</h3><p>连通分量：无向图的极大连通子图</p>
+<p>连通图只有一个连通分量，即其自身；非连通的无向图有多个连通分量</p>
+<p>下面的无向图有 $3$ 个连通分量</p>
+<p><img src="/2020/07/15/图/10.png" alt></p>
+<h2 id="强连通图（Strongly-Connected-Graph）"><a href="#强连通图（Strongly-Connected-Graph）" class="headerlink" title="强连通图（Strongly Connected Graph）"></a>强连通图（Strongly Connected Graph）</h2><p>如果有向图 $G$ 中任意 $2$ 个顶点都是连通的，则称 $G$ 为强连通图</p>
+<p><img src="/2020/07/15/图/11.png" alt></p>
+<h3 id="强连通分量（Strongly-Connected-Component）"><a href="#强连通分量（Strongly-Connected-Component）" class="headerlink" title="强连通分量（Strongly Connected Component）"></a>强连通分量（Strongly Connected Component）</h3><p>强连通分量：有向图的极大强连通子图</p>
+<p>强连通图只有一个强连通分量，即其自身；非强连通的有向图有多个强连通分量</p>
+<p><img src="/2020/07/15/图/12.png" alt></p>
+<h2 id="图的实现方案"><a href="#图的实现方案" class="headerlink" title="图的实现方案"></a>图的实现方案</h2><p>图有2种常见的实现方案</p>
+<ol>
+<li><p><strong>邻接矩阵（Adjacency Matrix）</strong></p>
+</li>
+<li><p><strong>邻接表（Adjacency List）</strong></p>
+</li>
+</ol>
+<h3 id="邻接矩阵（Adjacency-Matrix）"><a href="#邻接矩阵（Adjacency-Matrix）" class="headerlink" title="邻接矩阵（Adjacency Matrix）"></a>邻接矩阵（Adjacency Matrix）</h3><ol>
+<li><p>邻接矩阵的存储方式</p>
+<p>一维数组存放顶点信息</p>
+<p>二维数组存放边信息</p>
+</li>
+<li><p>邻接矩阵比较适合稠密图</p>
+<p>不然会比较浪费内存</p>
+</li>
+</ol>
+<p><img src="/2020/07/15/图/13.png" alt></p>
+<h4 id="邻接矩阵-–-有权图"><a href="#邻接矩阵-–-有权图" class="headerlink" title="邻接矩阵 – 有权图"></a>邻接矩阵 – 有权图</h4><p><img src="/2020/07/15/图/14.png" alt></p>
+<h3 id="邻接表（Adjacency-List）"><a href="#邻接表（Adjacency-List）" class="headerlink" title="邻接表（Adjacency List）"></a>邻接表（Adjacency List）</h3><p><img src="/2020/07/15/图/15.png" alt></p>
+<h4 id="邻接表-–-有权图"><a href="#邻接表-–-有权图" class="headerlink" title="邻接表 – 有权图"></a>邻接表 – 有权图</h4><p><img src="/2020/07/15/图/16.png" alt></p>
+<h2 id="图的基础接口"><a href="#图的基础接口" class="headerlink" title="图的基础接口"></a>图的基础接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 边的数量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">edgesSize</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 顶点的数量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">verticesSize</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加、删除顶点</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addVertex</span><span class="params">(V v)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">removeVertex</span><span class="params">(V v)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(V from, V to)</span></span>;</span><br><span class="line"><span class="comment">// 添加有权边</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(V from, V to, E weight)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">removeEdge</span><span class="params">(V from, V to)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="顶点的定义"><a href="#顶点的定义" class="headerlink" title="顶点的定义"></a>顶点的定义</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Vertex</span>&lt;<span class="title">V</span>, <span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    V value;</span><br><span class="line">    Set&lt;Edge&lt;V, E&gt;&gt; inEdges = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    Set&lt;Edge&lt;V, E&gt;&gt; outEdges = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    Vertex(V value) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.equals(value, ((Vertex&lt;V, E&gt;)obj).value);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value == <span class="keyword">null</span> ? <span class="number">0</span> : value.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value == <span class="keyword">null</span> ? <span class="string">"null"</span> : value.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="边的定义"><a href="#边的定义" class="headerlink" title="边的定义"></a>边的定义</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Edge</span>&lt;<span class="title">V</span>, <span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    Vertex&lt;V, E&gt; from;</span><br><span class="line">    Vertex&lt;V, E&gt; to;</span><br><span class="line">    E weight;</span><br><span class="line"></span><br><span class="line">    Edge(Vertex&lt;V, E&gt; from, Vertex&lt;V, E&gt; to) &#123;</span><br><span class="line">        <span class="keyword">this</span>.from = from;</span><br><span class="line">        <span class="keyword">this</span>.to = to;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        Edge&lt;V, E&gt; edge = (Edge&lt;V, E&gt;) obj;</span><br><span class="line">        <span class="keyword">return</span> Objects.equals(from, edge.from) &amp;&amp; Objects.equals(to, edge.to);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> from.hashCode() * <span class="number">31</span> + to.hashCode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Edge [from="</span> + from + <span class="string">", to="</span> + to + <span class="string">", weight="</span> + weight + <span class="string">"]"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><p>从图中某一顶点出发访问图中其余顶点，且每一个顶点仅被访问一次</p>
+<p>图有 $2$ 种常见的遍历方式（有向图、无向图都适用）</p>
+<ol>
+<li><p>广度优先搜索$（Breadth First Search，BFS）$，又称为宽度优先搜索、横向优先搜索</p>
+</li>
+<li><p>深度优先搜索$（Depth First Search，DFS）$</p>
+</li>
+</ol>
+<p>发明“深度优先搜索”算法的 $2$ 位科学家在 $1986$年共同获得计算机领域的最高奖：图灵奖</p>
+<h3 id="广度优先搜索（Breadth-First-Search）"><a href="#广度优先搜索（Breadth-First-Search）" class="headerlink" title="广度优先搜索（Breadth First Search）"></a>广度优先搜索（Breadth First Search）</h3><p>二叉树层序遍历也是一种广度优先搜索</p>
+<p><img src="/2020/07/15/图/17.png" alt></p>
+<p><img src="/2020/07/15/图/18.png" alt></p>
+<h4 id="广度优先搜索-–-思路"><a href="#广度优先搜索-–-思路" class="headerlink" title="广度优先搜索 – 思路"></a>广度优先搜索 – 思路</h4><p><img src="/2020/07/15/图/19.png" alt></p>
+<h4 id="广度优先搜索-–-实现"><a href="#广度优先搜索-–-实现" class="headerlink" title="广度优先搜索 – 实现"></a>广度优先搜索 – 实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(&lt;Vertex&lt;V, E&gt;&gt; beginVertex)</span> </span>&#123;</span><br><span class="line">    Set&lt;Vertex&lt;V, E&gt;&gt; visitedVertices = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    Queue&lt;Vertex&lt;V, E&gt;&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    queue.offer(beginVertex);</span><br><span class="line">    visitedVertices.add(beginVertex);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">        Vertex&lt;V, E&gt; vertex = queue.poll();</span><br><span class="line">        System.out.println(vertex.value);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Edge&lt;V, E&gt; edge : vertex.outEdges) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visitedVertices.contains(edge.to)) <span class="keyword">continue</span>;</span><br><span class="line">            queue.offer(edge.to);</span><br><span class="line">            visitedVertices.add(edge.to);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="深度优先搜索（Depth-First-Search）"><a href="#深度优先搜索（Depth-First-Search）" class="headerlink" title="深度优先搜索（Depth First Search）"></a>深度优先搜索（Depth First Search）</h3><p>二叉树前序遍历也是一种深度优先搜索</p>
+<p><img src="/2020/07/15/图/20.png" alt></p>
+<p><img src="/2020/07/15/图/21.png" alt></p>
+<h4 id="深度优先搜索-–-递归实现"><a href="#深度优先搜索-–-递归实现" class="headerlink" title="深度优先搜索 – 递归实现"></a>深度优先搜索 – 递归实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(V begin)</span> </span>&#123;</span><br><span class="line">    Vertex&lt;V, E&gt; beginVertex = vertices.get(begin);</span><br><span class="line">    <span class="keyword">if</span> (beginVertex == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">    dfs(beginVertex, <span class="keyword">new</span> HashSet&lt;&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(Vertex&lt;V, E&gt; vertex, Set&lt;Vertex&lt;V, E&gt;&gt; visitedVertices)</span> </span>&#123;</span><br><span class="line">    System.out.println(vertex.value);</span><br><span class="line">    visitedVertices.add(vertex);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (Edge&lt;V, E&gt; edge : vertex.outEdges) &#123;</span><br><span class="line">        <span class="keyword">if</span> (visitedVertices.contains(edge.to)) <span class="keyword">continue</span>;</span><br><span class="line">        dfs(edge.to, visitedVertices);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="深度优先搜索-–-非递归实现"><a href="#深度优先搜索-–-非递归实现" class="headerlink" title="深度优先搜索 – 非递归实现"></a>深度优先搜索 – 非递归实现</h4><p><img src="/2020/07/15/图/22.png" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(Vertex&lt;V, E&gt; beginVertex)</span> </span>&#123;</span><br><span class="line">    Set&lt;Vertex&lt;V, E&gt;&gt; visitedVertices = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    Stack&lt;Vertex&lt;V, E&gt;&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先访问起点</span></span><br><span class="line">    stack.push(beginVertex);</span><br><span class="line">    visitedVertices.add(beginVertex);</span><br><span class="line">    System.out.println(beginVertex.value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">        Vertex&lt;V, E&gt; vertex = stack.pop();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Edge&lt;V, E&gt; edge : vertex.outEdges) &#123;</span><br><span class="line">            <span class="keyword">if</span> (visitedVertices.contains(edge.to)) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            stack.push(edge.from);</span><br><span class="line">            stack.push(edge.to);</span><br><span class="line">            visitedVertices.add(edge.to);</span><br><span class="line">            System.out.println(edge.to.value);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/图/" rel="tag"># 图</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/15/并查集/" rel="next" title="并查集">
+                <i class="fa fa-chevron-left"></i> 并查集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/15/AOV网/" rel="prev" title="AOV网">
+                AOV网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/face.jpg" alt>
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">博客，学习记录</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Croissant2097" title="GitHub &rarr; https://github.com/Croissant2097" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/" title="https://hexo.io/zh-cn/" rel="noopener" target="_blank">Hexo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://google.com/" title="https://google.com/" rel="noopener" target="_blank">谷歌</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/Croissant2097" title="https://github.com/Croissant2097" rel="noopener" target="_blank">myblog</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图（Graph）"><span class="nav-number">1.</span> <span class="nav-text">图（Graph）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是图"><span class="nav-number">1.1.</span> <span class="nav-text">什么是图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图（Directed-Graph）"><span class="nav-number">1.2.</span> <span class="nav-text">有向图（Directed Graph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#出度、入度"><span class="nav-number">1.2.1.</span> <span class="nav-text">出度、入度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无向图（Undirected-Graph）"><span class="nav-number">1.3.</span> <span class="nav-text">无向图（Undirected Graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合图（Mixed-Graph）"><span class="nav-number">1.4.</span> <span class="nav-text">混合图（Mixed Graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单图、多重图"><span class="nav-number">1.5.</span> <span class="nav-text">简单图、多重图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无向完全图（Undirected-Complete-Graph）"><span class="nav-number">1.6.</span> <span class="nav-text">无向完全图（Undirected Complete Graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向完全图（Directed-Complete-Graph）"><span class="nav-number">1.7.</span> <span class="nav-text">有向完全图（Directed Complete Graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有权图（Weighted-Graph）"><span class="nav-number">1.8.</span> <span class="nav-text">有权图（Weighted Graph）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连通图（Connected-Graph）"><span class="nav-number">1.9.</span> <span class="nav-text">连通图（Connected Graph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连通分量（Connected-Component）"><span class="nav-number">1.9.1.</span> <span class="nav-text">连通分量（Connected Component）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强连通图（Strongly-Connected-Graph）"><span class="nav-number">1.10.</span> <span class="nav-text">强连通图（Strongly Connected Graph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强连通分量（Strongly-Connected-Component）"><span class="nav-number">1.10.1.</span> <span class="nav-text">强连通分量（Strongly Connected Component）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的实现方案"><span class="nav-number">1.11.</span> <span class="nav-text">图的实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#邻接矩阵（Adjacency-Matrix）"><span class="nav-number">1.11.1.</span> <span class="nav-text">邻接矩阵（Adjacency Matrix）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接矩阵-–-有权图"><span class="nav-number">1.11.1.1.</span> <span class="nav-text">邻接矩阵 – 有权图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻接表（Adjacency-List）"><span class="nav-number">1.11.2.</span> <span class="nav-text">邻接表（Adjacency List）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接表-–-有权图"><span class="nav-number">1.11.2.1.</span> <span class="nav-text">邻接表 – 有权图</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的基础接口"><span class="nav-number">1.12.</span> <span class="nav-text">图的基础接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶点的定义"><span class="nav-number">1.13.</span> <span class="nav-text">顶点的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边的定义"><span class="nav-number">1.14.</span> <span class="nav-text">边的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图的遍历"><span class="nav-number">1.15.</span> <span class="nav-text">图的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#广度优先搜索（Breadth-First-Search）"><span class="nav-number">1.15.1.</span> <span class="nav-text">广度优先搜索（Breadth First Search）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#广度优先搜索-–-思路"><span class="nav-number">1.15.1.1.</span> <span class="nav-text">广度优先搜索 – 思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#广度优先搜索-–-实现"><span class="nav-number">1.15.1.2.</span> <span class="nav-text">广度优先搜索 – 实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先搜索（Depth-First-Search）"><span class="nav-number">1.15.2.</span> <span class="nav-text">深度优先搜索（Depth First Search）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#深度优先搜索-–-递归实现"><span class="nav-number">1.15.2.1.</span> <span class="nav-text">深度优先搜索 – 递归实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深度优先搜索-–-非递归实现"><span class="nav-number">1.15.2.2.</span> <span class="nav-text">深度优先搜索 – 非递归实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">127k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:55</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  
+    <script type="text/javascript" src="/js/src/love.js"></script>
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end --></body>
+</html>
